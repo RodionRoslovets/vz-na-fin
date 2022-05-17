@@ -1,0 +1,11 @@
+.parameters-table {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+}
+.parameters-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
