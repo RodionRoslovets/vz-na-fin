@@ -1,28 +1,13 @@
-//import libraries
+'use strict';
 
-const ModuleDispatcher = require('module-dispatcher');
-const app = (function (app_) {
- 
-	'use strict';
- 
-	app_.init = function () {
- 
-		app.docReady(function () {
-			new ModuleDispatcher({
-				Library : app
-			});
-		});
-	};
- 
-	return app_;
-})({});
- 
-app.docReady = function (f) {
-	return /in/.test(document.readyState) ? window.setTimeout(app.docReady, 9, f) : f();
-};
- 
-app.generate_perameters = require('./partials/generate-parametrs');
- 
-module.exports = app;
- 
-app.generate_perameters.init();
+import submitToGenerate from "./partials/generate";
+
+const settingsForm = document.querySelector('.js_parameters-form');
+const parametersTable = document.querySelector('.js_parameters-table');
+const errorField = document.querySelector(".js_errno-field");
+
+settingsForm.addEventListener('submit', (event) => {
+	event.preventDefault();
+
+	submitToGenerate(settingsForm, errorField, parametersTable);
+});

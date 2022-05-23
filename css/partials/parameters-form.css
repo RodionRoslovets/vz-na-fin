@@ -1,0 +1,24 @@
+.parameters-form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    padding: 25px;
+}
+
+.parameters-form input {
+    margin: 5px 0;
+
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+
+    background: none;
+    border: none;
+    border-bottom: 1px solid gray;
+}
+
+.parameters-form input[type="submit"] {
+    background: whitesmoke;
+    border: 1px solid gray;
+}

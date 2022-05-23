@@ -1,11 +1,3 @@
-.parameters-table {
-    display: flex;
-    flex-direction: column;
-    margin: 10px 0;
-}
-.parameters-form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-}
+@import "partials/styleguide.css";
+@import "partials/parameters-table.css";
+@import "partials/parameters-form.css";

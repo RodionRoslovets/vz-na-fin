@@ -5,13 +5,13 @@
 </head>
 <body>
     <form class="parameters-form js_parameters-form">
-        <input type="number" class="js_parametrs-number-input" value="3" min="0" placeholder="Введите количество параметров">
-        <input type="number" class="js_parametr-step-input" value="0.2" min="0" step="0.005" placeholder="Введите шаг вычисления">
+        <input type="number" class="js_parametrs-number-input" min="0" placeholder="Введите количество параметров">
+        <input type="number" class="js_parametr-step-input" min="0" step="0.0005" placeholder="Введите шаг вычисления, кратный 0.0005">
         <input type="submit" class="">
     </form>
     <div class="errno-field js_errno-field"></div>
-    <div class="parameters-table js_parameters-table">
-
+    <div class="parameters-table">
+        <table class="parameters-table__table js_parameters-table"></table>
     </div>
     <script src="./js/script.js"></script>
 </body>

@@ -1,0 +1,20 @@
+.parameters-table {
+    width: 100%;
+    overflow: auto;
+}
+
+.parameters-table__table {
+    margin: 10px 0;
+    text-align: end;
+}
+
+.parameters-table__row {
+}
+
+.parameters-table__item {
+    padding: 10px 15px;
+}
+
+.parameters-table__item:nth-child(2n) {
+    background: whitesmoke;
+}
