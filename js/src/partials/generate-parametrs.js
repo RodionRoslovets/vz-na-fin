@@ -123,16 +123,19 @@ module.exports = (function () {
 		settingsForm.addEventListener('submit', (event) => {
 			event.preventDefault();
 
+			const parametersTable = document.querySelector('.js_parameters-table');
+			const errorField = document.querySelector(".js_errno-field");
+			parametersTable.innerHTML = '';
+			errorField.innerHTML = '';
+
 			if(parametersKitsGenerateSettings()) {
 				parametersKitsArrayGenerate();
 
-				const parametersTable = document.querySelector('.js_parameters-table');
-				parametersTable.innerHTML = ''
 				parametersKitsArray.forEach((parametersKit) => {
 					parametersTable.innerHTML += "<div>" + parametersKit + "</div>";
 				});
 			} else {
-
+				errorField.innerHTML = `Введите пожалуйста шаг, которому кратна сумма ряда равная: ${parameterKitSumm}`;
 			}
 		});
 	};
