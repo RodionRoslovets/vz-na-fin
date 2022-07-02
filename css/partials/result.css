@@ -1,0 +1,19 @@
+.result-table {
+
+}
+
+.result-table__pagination {
+    display: flex;
+    flex-flow: row nowrap;
+
+    height: 50px;
+    overflow: auto;
+}
+
+.result-table__pagination button {
+    margin: 3px 10px;
+}
+
+.result-table__pagination-info {
+
+}

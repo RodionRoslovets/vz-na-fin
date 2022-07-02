@@ -78,7 +78,7 @@ function kitIsNotExist(parametersKit) {
 
 function parametersKitArrayAdd(parametersKit) {
 	let kitArray = parametersKit.slice(0);
-	if (kitIsNotExist(kitArray)) {
+	//if (kitIsNotExist(kitArray)) {
 		parametersKitsArrayGeneratePull.push(kitArray);
 
 		// Фильтрация конечных значений
@@ -93,7 +93,7 @@ function parametersKitArrayAdd(parametersKit) {
 			// Добавление результата в результирующий массив
 			parametersKitsArray.push(kitArray);
 		}
-	}
+	//}
 }
 
 function parametersKitArrayPrepareClear(parametersKit) {
@@ -133,14 +133,18 @@ function parametersKitsArrayGenerateAfter() {
 	parameterKitSumm /= Math.pow(10, parameterDecimalPlaces);
 	parameterStep /= Math.pow(10, parameterDecimalPlaces);
 
-	frontend.resultAdd(parametersKitsArray, isGradeExist());
+	frontend.resultAdd(isGradeExist());
 }
 
 function parametersKitsArrayGenerate() {
 	parametersKitsArrayPrepareToGenerate();
 
 	for (let j = 0; j < parametersKitsGenerateNumber; j++) {
-		for (let p = 0; p < parametersKitsArrayGeneratePull.length; p++) {
+		console.log(`проход генерации: ${j+1} из ${parametersKitsGenerateNumber}, 
+		количество элементов массива генерации на этом этапе: ${parametersKitsArrayGeneratePull.length}`);
+
+		const parametersKitsArrayGeneratePullLength = parametersKitsArrayGeneratePull.length;
+		for (let p = 0; p < parametersKitsArrayGeneratePullLength; p++) {
 			let KitArray = parametersKitsArrayGeneratePull.shift();
 			if (KitArray[0] <= 0) continue;
 			for (let i = 1; i < KitArray.length; i++) {
@@ -149,18 +153,15 @@ function parametersKitsArrayGenerate() {
 				KitArray = parametersKitArrayPrepareAfter(KitArray, i);
 			}
 		}
-		// delete to relise
-		// console.log(j);
-		// console.log(parametersKitsArrayGeneratePull[1]);
-		// console.log(parametersKitsArrayGeneratePull.length);
 	}
 
 	parametersKitsArrayGenerateAfter();
 }
 
-export default function submitToGenerate(settingsForm, errorField, parametersTable) {
+function submitToGenerate(settingsForm, errorField, parametersTable) {
 	frontend.clear(errorField, parametersTable);
 	frontend.setResultTable(parametersTable);
+	frontend.setErrorField(errorField);
 	error.setErrorField(errorField);
 	const start = performance.mark('начало')
 
@@ -177,3 +178,12 @@ export default function submitToGenerate(settingsForm, errorField, parametersTab
 	performance.clearMeasures()
 	performance.clearMarks()
 }
+
+function getParametersKits() {
+	return parametersKitsArray
+}
+
+export {
+	submitToGenerate,
+	getParametersKits,
+};

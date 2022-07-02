@@ -19,6 +19,10 @@
     background: whitesmoke;
 }
 
+.parameters-table__item:nth-child(1) {
+    background: rgb(226, 255, 173);
+}
+
 @media screen and (min-width: 576px) {
     
 }

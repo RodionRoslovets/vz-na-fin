@@ -1,6 +1,6 @@
 'use strict';
 
-import submitToGenerate from "./partials/generate";
+import {submitToGenerate} from "./partials/generate";
 
 const settingsForm = document.querySelector('.js_parameters-form');
 
