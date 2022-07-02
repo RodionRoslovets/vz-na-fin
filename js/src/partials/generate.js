@@ -2,6 +2,7 @@ import * as frontend from "./frontend";
 import * as error from "./errno";
 
 import {filter, setFilterParameters} from "./filter";
+import {isGradeExist, setGradeValues, addGrade} from "./grade";
 
 let parametersNumber = 3,
 	parameterKitSumm = 1,
@@ -24,13 +25,13 @@ function decimalPlacesCount() {
 
 function toInteger() {
 	parameterDecimalPlaces = decimalPlacesCount();
-	parameterKitSumm *= Math.pow(10, parameterDecimalPlaces);
-	parameterStep *= Math.pow(10, parameterDecimalPlaces);
+	parameterKitSumm *= 10 ** parameterDecimalPlaces;
+	parameterStep *= 10 ** parameterDecimalPlaces;
 }
 
 function toDouble(parametersKit) {
 	return parametersKit.map((item) => {
-		return item / Math.pow(10, parameterDecimalPlaces);
+		return item / (10 ** parameterDecimalPlaces);
 	});
 }
 
@@ -44,9 +45,15 @@ function parametersKitsGenerateSettings(settingsForm) {
 		return false;
 	}
 
-	// parameters to generate parameters kit
+	// parameters to filter parameters kit
 	if (!setFilterParameters(settingsForm.querySelector('.js_parametrs-filter-input').value)) {
 		error.setFilterParametersError();
+		return false;
+	}
+
+	// parameters to calculete grade of parameters kit
+	if (!setGradeValues(settingsForm.querySelector('.js_parametrs-grade-input').value, parametersNumber)) {
+		error.setGradeValuesError();
 		return false;
 	}
 
@@ -70,13 +77,21 @@ function kitIsNotExist(parametersKit) {
 }
 
 function parametersKitArrayAdd(parametersKit) {
-	let KitArray = parametersKit.slice(0);
-	if (kitIsNotExist(KitArray)) {
-		parametersKitsArrayGeneratePull.push(KitArray);
+	let kitArray = parametersKit.slice(0);
+	if (kitIsNotExist(kitArray)) {
+		parametersKitsArrayGeneratePull.push(kitArray);
+
 		// Фильтрация конечных значений
-		if (filter(KitArray)) {
-			KitArray = toDouble(KitArray);
-			parametersKitsArray.push(KitArray);
+		if (filter(kitArray)) {
+
+			//Добавление оценки
+			if (isGradeExist()) kitArray = addGrade(kitArray);
+
+			// Приведение набора к вещественному типу данных
+			kitArray = toDouble(kitArray);
+
+			// Добавление результата в результирующий массив
+			parametersKitsArray.push(kitArray);
 		}
 	}
 }
@@ -118,7 +133,7 @@ function parametersKitsArrayGenerateAfter() {
 	parameterKitSumm /= Math.pow(10, parameterDecimalPlaces);
 	parameterStep /= Math.pow(10, parameterDecimalPlaces);
 
-	frontend.resultAdd(parametersKitsArray);
+	frontend.resultAdd(parametersKitsArray, isGradeExist());
 }
 
 function parametersKitsArrayGenerate() {

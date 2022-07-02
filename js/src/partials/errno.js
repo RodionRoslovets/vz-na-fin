@@ -12,8 +12,14 @@ function setFilterParametersError() {
     errorField.innerHTML += `Введите пожалуйста корректную строку для фильтрации`;
 }
 
+function setGradeValuesError() {
+    errorField.innerHTML += `Введите пожалуйста корректную строку для вычисления оценки`;
+}
+
+
 export {
     stepError,
     setErrorField,
     setFilterParametersError,
+    setGradeValuesError
 };
