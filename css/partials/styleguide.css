@@ -1,5 +1,22 @@
 body {
-    font-size: 24px;
-    margin: 0;
-    padding: 0;
+    font-size: 14px;
+}
+
+.calculate {
+    cursor: wait;
+}
+
+@media screen and (min-width: 576px) {
+    body {
+        font-size: 20px;
+    }
+}
+
+@media screen and (min-width: 768px) {
+}
+
+@media screen and (min-width: 992px) {
+    body {
+        font-size: 22px;
+    }
 }

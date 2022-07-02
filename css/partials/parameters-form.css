@@ -1,13 +1,11 @@
 .parameters-form {
     display: flex;
-    flex-direction: column;
-    align-items: stretch;
-
-    padding: 25px;
+    flex-flow: row wrap;
+    justify-content: center;
 }
 
 .parameters-form input {
-    margin: 5px 0;
+    margin: 5px;
 
     font-family: inherit;
     font-size: inherit;
@@ -19,6 +17,37 @@
 }
 
 .parameters-form input[type="submit"] {
+    min-width: 80%;
     background: whitesmoke;
     border: 1px solid gray;
+    margin-top: 30px;
+}
+
+.parameters-form div {
+    display: flex;
+    flex-direction: column;
+    
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.parameters-form__parameters-generate-block {
+
+}
+
+.parameters-form__parameters-filter-block {
+
+}
+
+@media screen and (min-width: 576px) {
+    
+}
+
+@media screen and (min-width: 768px) {
+}
+
+@media screen and (min-width: 992px) {
+    .parameters-form div {
+        width: 50%;
+    }
 }

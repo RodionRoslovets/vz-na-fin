@@ -1,18 +1,28 @@
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
     <form class="parameters-form js_parameters-form">
-        <input type="number" class="js_parametrs-number-input" min="0" placeholder="Введите количество параметров">
-        <input type="number" class="js_parametr-step-input" min="0" step="0.0005" placeholder="Введите шаг вычисления, кратный 0.0005">
-        <input type="submit" class="">
+        <div class='parameters-form__parameters-generate-block'>
+            <label for="number">Введите количество параметров:</label>
+            <input type="number" id="number" name="number" class="js_parametrs-number-input" min="0" placeholder="Введите количество параметров">
+            <label for="step">Введите шаг вычисления, кратный 0.0005:</label>
+            <input type="number" id="step" name="step" class="js_parametrs-step-input" min="0" step="0.0005" placeholder="Введите шаг вычисления, кратный 0.0005">
+        </div>
+        <div class='parameters-form__parameters-filter-block'>
+            <label for="filter">Введите строку для фильтрации значений:</label>
+            <input type="text" id="filter" name="filter" class="js_parametrs-filter-input" placeholder="Введите строку для фильтрации значений">
+            <label for="grade">Введите последовательность коофициентов значимости:</label>
+            <input type="text" id="grade" name="grade" class="js_parametrs-grade-input" placeholder="Введите последовательность коофициентов значимости">
+        </div>
+        <input type="submit" class="js_parametrs-form-submit" value="Рассчитать">
     </form>
     <div class="errno-field js_errno-field"></div>
-    <div class="parameters-table">
-        <table class="parameters-table__table js_parameters-table"></table>
-    </div>
+    <div class="parameters-table js_parameters-table"></div>
     <script src="./js/script.js"></script>
 </body>
 </html>

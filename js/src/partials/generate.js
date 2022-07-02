@@ -1,6 +1,8 @@
 import * as frontend from "./frontend";
 import * as error from "./errno";
 
+import {filter, setFilterParameters} from "./filter";
+
 let parametersNumber = 3,
 	parameterKitSumm = 1,
 	parameterStep = 0.2,
@@ -15,7 +17,7 @@ const DecimalPlacesNumber = x => ( (x.toString().includes('.')) ? (x.toString().
 function decimalPlacesCount() {
 	let DecimalPlaces = DecimalPlacesNumber(parameterStep);
 	if (DecimalPlaces < DecimalPlacesNumber(parameterKitSumm)) {
-		DecimalPlaces = DecimalPlacesNumber(parameterKitSumm)
+		DecimalPlaces = DecimalPlacesNumber(parameterKitSumm);
 	}
 	return DecimalPlaces;
 }
@@ -33,18 +35,31 @@ function toDouble(parametersKit) {
 }
 
 function parametersKitsGenerateSettings(settingsForm) {
+	// parameters to generate parameters kit
 	parametersNumber = settingsForm.querySelector('.js_parametrs-number-input').value;
-	parameterStep = settingsForm.querySelector('.js_parametr-step-input').value;
+	parameterStep = settingsForm.querySelector('.js_parametrs-step-input').value;
 	parametersKitsGenerateNumber = parameterKitSumm/parameterStep;
-	if (Number.isInteger(parametersKitsGenerateNumber)) return true;
-	return false;
+	if(!Number.isInteger(parametersKitsGenerateNumber)) {
+		error.stepError(parameterKitSumm);
+		return false;
+	}
+
+	// parameters to generate parameters kit
+	if (!setFilterParameters(settingsForm.querySelector('.js_parametrs-filter-input').value)) {
+		error.setFilterParametersError();
+		return false;
+	}
+
+	//const setGradeParameterSuccess = setFilterParameters(settingsForm.querySelector('.js_parametrs-grade-input').value);
+	return true;
 }
 
 function kitIsNotExist(parametersKit) {
-	for (let j = 0; j < parametersKitsArrayGeneratePull.length; j++) {
+	for (let j = parametersKitsArrayGeneratePull.length - 1; j >= 0; j--) { // с конца пула генерации проверяем
 		const kit = parametersKitsArrayGeneratePull[j].slice(0);
-		let kitElemIsExist = 0;
-		for (let i = 0; i < kit.length; i++) {
+		if (kit[0] != parametersKit[0]) return true; // если кончились элементы вычесленные в этой итерации цикла генерации
+		let kitElemIsExist = 1;
+		for (let i = 1; i < kit.length; i++) {
 			if (kit[i] == parametersKit[i]) {
 				kitElemIsExist++;
 			}
@@ -58,9 +73,11 @@ function parametersKitArrayAdd(parametersKit) {
 	let KitArray = parametersKit.slice(0);
 	if (kitIsNotExist(KitArray)) {
 		parametersKitsArrayGeneratePull.push(KitArray);
-		KitArray = toDouble(KitArray);
-		parametersKitsArray.push(KitArray);
-		frontend.resultAddInTable(KitArray);
+		// Фильтрация конечных значений
+		if (filter(KitArray)) {
+			KitArray = toDouble(KitArray);
+			parametersKitsArray.push(KitArray);
+		}
 	}
 }
 
@@ -100,6 +117,8 @@ function parametersKitsArrayPrepareToGenerate() {
 function parametersKitsArrayGenerateAfter() {
 	parameterKitSumm /= Math.pow(10, parameterDecimalPlaces);
 	parameterStep /= Math.pow(10, parameterDecimalPlaces);
+
+	frontend.resultAdd(parametersKitsArray);
 }
 
 function parametersKitsArrayGenerate() {
@@ -115,6 +134,10 @@ function parametersKitsArrayGenerate() {
 				KitArray = parametersKitArrayPrepareAfter(KitArray, i);
 			}
 		}
+		// delete to relise
+		// console.log(j);
+		// console.log(parametersKitsArrayGeneratePull[1]);
+		// console.log(parametersKitsArrayGeneratePull.length);
 	}
 
 	parametersKitsArrayGenerateAfter();
@@ -124,11 +147,18 @@ export default function submitToGenerate(settingsForm, errorField, parametersTab
 	frontend.clear(errorField, parametersTable);
 	frontend.setResultTable(parametersTable);
 	error.setErrorField(errorField);
-
+	const start = performance.mark('начало')
 
 	if(parametersKitsGenerateSettings(settingsForm)) {
+		frontend.generateBegin();
 		parametersKitsArrayGenerate();
-	} else {
-		error.stepError(parameterKitSumm);
+		frontend.generateEnd();
 	}
+
+	const finish = performance.mark('конец')
+
+	performance.measure('итого', 'начало', 'конец')
+	console.log(performance.getEntriesByName('итого')[0].duration)
+	performance.clearMeasures()
+	performance.clearMarks()
 }
