@@ -1,3 +1,7 @@
+.result-block {
+    display: none;
+}
+
 .result-table {
     display: none;
 }

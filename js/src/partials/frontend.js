@@ -122,6 +122,7 @@ function resultAdd(gradeExist) {
 	setResultTablePageNumber(getParametersKits());
 	resultTableOpenPage = 1;
 	resultTableDraw(gradeExist);
+	document.querySelector('.js_result-block').style.display = 'block';
 }
 
 function generateBegin() {
