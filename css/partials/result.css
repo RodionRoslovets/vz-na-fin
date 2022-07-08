@@ -1,5 +1,5 @@
 .result-table {
-
+    display: none;
 }
 
 .result-table__pagination {
@@ -16,4 +16,55 @@
 
 .result-table__pagination-info {
 
+}
+
+.result-menu {
+    display: flex;
+    flex-flow: row wrap;
+
+    margin: 20px 0;
+    background-color: whitesmoke;
+}
+
+.result-menu  .active{
+    display: flex;
+
+    background-color: gray;
+}
+
+
+.result-menu__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 15px 0;
+
+    width: 100%;
+}
+
+.result-grath {
+    display: none;
+}
+
+.active {
+    display: block;
+}
+
+@media screen and (min-width: 576px) {
+    .result-menu__button {
+        width: 50%;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .result-menu__button {
+        width: 33.3%;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .result-menu__button {
+        width: 25%;
+    }
 }

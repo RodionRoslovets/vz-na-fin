@@ -8,6 +8,7 @@ let parametersNumber = 3,
 	parameterKitSumm = 1,
 	parameterStep = 0.2,
 	parameterDecimalPlaces,
+	parameterDecimalCount,
 	parametersKitsGenerateNumber;
 
 let parametersKitsArray = [],
@@ -25,13 +26,14 @@ function decimalPlacesCount() {
 
 function toInteger() {
 	parameterDecimalPlaces = decimalPlacesCount();
-	parameterKitSumm *= 10 ** parameterDecimalPlaces;
-	parameterStep *= 10 ** parameterDecimalPlaces;
+	parameterDecimalCount = 10 ** parameterDecimalPlaces;
+	parameterKitSumm *= parameterDecimalCount;
+	parameterStep *= parameterDecimalCount;
 }
 
 function toDouble(parametersKit) {
 	return parametersKit.map((item) => {
-		return item / (10 ** parameterDecimalPlaces);
+		return item / parameterDecimalCount;
 	});
 }
 
@@ -78,7 +80,7 @@ function kitIsNotExist(parametersKit) {
 
 function parametersKitArrayAdd(parametersKit) {
 	let kitArray = parametersKit.slice(0);
-	//if (kitIsNotExist(kitArray)) {
+	if (kitIsNotExist(kitArray)) {
 		parametersKitsArrayGeneratePull.push(kitArray);
 
 		// Фильтрация конечных значений
@@ -93,7 +95,7 @@ function parametersKitArrayAdd(parametersKit) {
 			// Добавление результата в результирующий массив
 			parametersKitsArray.push(kitArray);
 		}
-	//}
+	}
 }
 
 function parametersKitArrayPrepareClear(parametersKit) {
@@ -130,8 +132,8 @@ function parametersKitsArrayPrepareToGenerate() {
 }
 
 function parametersKitsArrayGenerateAfter() {
-	parameterKitSumm /= Math.pow(10, parameterDecimalPlaces);
-	parameterStep /= Math.pow(10, parameterDecimalPlaces);
+	parameterKitSumm /= parameterDecimalCount;
+	parameterStep /= parameterDecimalCount;
 
 	frontend.resultAdd(isGradeExist());
 }
