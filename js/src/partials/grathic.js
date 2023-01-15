@@ -25,10 +25,10 @@ function grathDraw() {
     parametersGrathBlock.append(`Граффик изменения значений наборов весовых коофициентов`);
     parametersGrathBlock.append(parametersGrath);
 
-    labels = new Array(parametersNumber).fill().map( function(item, i) {
+    labels = new Array(parametersNumber).fill().map(function(item, i) {
         return `Коофициент №${i + 1}`;
     });
-    datasets = new Array(parametersKits.length).fill().map( function(item, i) {
+    datasets = new Array(parametersKits.length).fill().map(function(item, i) {
         return {
             type: 'line',
             label: `p${i + 1}`,
@@ -55,10 +55,10 @@ function grathDraw() {
         gradesGrathBlock.append(`Граффик изменения значений оценок весовых коофициентов`);
         gradesGrathBlock.append(gradesGrath);
         
-        labels = new Array(parametersKits.length).fill().map( function(item, i) {
+        labels = new Array(parametersKits.length).fill().map(function(item, i) {
             return `Набор №${i + 1}`;
         });
-        datasets = new Array(gradeNumbers).fill().map( function(item, i) {
+        datasets = new Array(gradeNumbers).fill().map(function(item, i) {
             return {
                 type: 'line',
                 label: `q${i + 1}`,

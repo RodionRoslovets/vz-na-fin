@@ -48,7 +48,16 @@
 
     padding: 15px 0;
 
+    border: none;
+    outline: none;
+
     width: 100%;
+}
+
+.result-menu__button:hover,
+.result-menu__button:active,
+.result-menu__button:focus {
+    background: rgb(226, 255, 173);
 }
 
 .result-graths {

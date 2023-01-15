@@ -20,7 +20,17 @@
     min-width: 80%;
     background: whitesmoke;
     border: 1px solid gray;
-    margin-top: 30px;
+    padding: 12px;
+    margin: 20px 0 30px;
+
+    border: none;
+    cursor: pointer;
+}
+
+.parameters-form input[type="submit"]:hover,
+.parameters-form input[type="submit"]:active,
+.parameters-form input[type="submit"]:focus {
+    background: rgb(226, 255, 173);
 }
 
 .parameters-form > div {

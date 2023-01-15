@@ -1,6 +1,6 @@
 'use strict';
 
-import {getParametersNumber, setParametersNumber, submitToGenerate} from "./partials/generate";
+import {getParametersNumber, setParametersNumber, submitToGenerate, getParametersKits} from "./partials/generate";
 
 import {createGradeInputTable, parametrsGradeInputRemoveKit, parametrsGradeInputAddKit} from "./partials/frontend";
 

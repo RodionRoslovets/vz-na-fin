@@ -1,4 +1,4 @@
-import {getParametersKits} from "./generate";
+import {getParametersNumber, getParametersKits} from "./generate";
 import {getGradeNumbers} from "./grade";
 import {grathDraw} from "./grathic";
 
@@ -133,6 +133,9 @@ function resultAdd(gradeExist) {
 
 	//Вывод графиков
 	grathDraw();
+
+	// Подготовка фала на скачивание
+	downloadButtonPrepare();
 }
 
 function generateBegin() {
@@ -232,6 +235,33 @@ function parametrsGradeInputAddKit(element, parametersNumber) {
 		addGradeTableItem(parametersRow);
 	}
 	tableBody.append(parametersRow);
+}
+
+function downloadButtonPrepare() {
+	const anchor = document.querySelector('.js_result-download');
+
+	// Download json | No need
+	// let data = JSON.stringify(getParametersKits(), null, '\t');
+
+	// anchor.href = `data:text/json;charset=utf-8,${encodeURIComponent(data)}`;
+	// anchor.download = 'data.json';
+
+	// Dounload csv | Need
+	let data = getParametersKits();
+	let dataHeader = new Array(data[0].length).fill().map(function(item, i) {
+        if (i < getParametersNumber()) {
+			return `p${i + 1}`
+		}
+		if (i < getParametersNumber() + getGradeNumbers()) {
+			return `q${i + 1 - getParametersNumber()}`
+		}
+		return `Q`
+    });
+	data.unshift(dataHeader);
+	data = data.map(e => e.join(";")).join("\n");
+	
+	anchor.href = `data:text/csv;charset=utf-8,${encodeURIComponent(data)}`;
+	anchor.download = 'data.csv';
 }
 
 export {
