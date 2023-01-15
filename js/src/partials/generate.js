@@ -16,6 +16,15 @@ let parametersKitsArray = [],
 
 const DecimalPlacesNumber = x => ( (x.toString().includes('.')) ? (x.toString().split('.').pop().length) : (0) );
 
+function getParametersNumber() {
+	return Number(parametersNumber);
+}
+
+function setParametersNumber(number) {
+	parametersNumber = number;
+	return parametersNumber;
+}
+
 function decimalPlacesCount() {
 	let DecimalPlaces = DecimalPlacesNumber(parameterStep);
 	if (DecimalPlaces < DecimalPlacesNumber(parameterKitSumm)) {
@@ -54,12 +63,11 @@ function parametersKitsGenerateSettings(settingsForm) {
 	}
 
 	// parameters to calculete grade of parameters kit
-	if (!setGradeValues(settingsForm.querySelector('.js_parametrs-grade-input').value, parametersNumber)) {
+	if (!setGradeValues(settingsForm.querySelector('.js_parametrs-grade-input'), parametersNumber)) {
 		error.setGradeValuesError();
 		return false;
 	}
-
-	//const setGradeParameterSuccess = setFilterParameters(settingsForm.querySelector('.js_parametrs-grade-input').value);
+	
 	return true;
 }
 
@@ -135,6 +143,10 @@ function parametersKitsArrayGenerateAfter() {
 	parameterKitSumm /= parameterDecimalCount;
 	parameterStep /= parameterDecimalCount;
 
+	// Принудительное очищение памяти, что бы точно очистелась на этом моменте.
+	parametersKitsArrayGeneratePull = [];
+
+	// Вывод результата
 	frontend.resultAdd(isGradeExist());
 }
 
@@ -144,7 +156,6 @@ function parametersKitsArrayGenerate() {
 	for (let j = 0; j < parametersKitsGenerateNumber; j++) {
 		console.log(`проход генерации: ${j+1} из ${parametersKitsGenerateNumber}, 
 		количество элементов массива генерации на этом этапе: ${parametersKitsArrayGeneratePull.length}`);
-
 		const parametersKitsArrayGeneratePullLength = parametersKitsArrayGeneratePull.length;
 		for (let p = 0; p < parametersKitsArrayGeneratePullLength; p++) {
 			let KitArray = parametersKitsArrayGeneratePull.shift();
@@ -186,6 +197,8 @@ function getParametersKits() {
 }
 
 export {
+	getParametersNumber,
+	setParametersNumber,
 	submitToGenerate,
 	getParametersKits,
 };

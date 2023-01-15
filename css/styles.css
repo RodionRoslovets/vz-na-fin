@@ -1,4 +1,7 @@
-@import "partials/styleguide.css";
 @import "partials/parameters-table.css";
 @import "partials/parameters-form.css";
+@import "partials/parametrs-grade-input.css";
 @import "partials/result.css";
+@import "partials/information-block.css";
+
+@import "partials/styleguide.css";

@@ -1,6 +1,10 @@
 'use strict';
 
-import {submitToGenerate} from "./partials/generate";
+import {getParametersNumber, setParametersNumber, submitToGenerate} from "./partials/generate";
+
+import {createGradeInputTable, parametrsGradeInputRemoveKit, parametrsGradeInputAddKit} from "./partials/frontend";
+
+import {setGradeValues} from "./partials/grade";
 
 const settingsForm = document.querySelector('.js_parameters-form');
 
@@ -13,6 +17,40 @@ settingsForm.addEventListener('submit', function(event) {
 	submitToGenerate(this, errorField, parametersTable);
 });
 
+function parametrsNumberInputChangeEventListener(e) {
+	const gradeTable = createGradeInputTable(setParametersNumber(Number(e.target.value)));
+	settingsForm.querySelectorAll('.js-parameters-grade-table-block').forEach(function(element) {
+		element.closest('.js_parametrs-grade-input').classList.add('active');
+		const table = element.querySelector('table');
+		if (table) table.parentNode.removeChild(table);
+		element.append(gradeTable);
+	});
+}
+settingsForm.querySelectorAll('.js_parametrs-number-input').forEach(element => {
+	element.addEventListener('change', parametrsNumberInputChangeEventListener);
+})
+
+
+function parametrsGradeInputChangeEventListener(e) {
+	setGradeValues;
+}
+settingsForm.querySelectorAll('.js_parametrs-grade-input').forEach(element => {
+	element.addEventListener('change', parametrsGradeInputChangeEventListener);
+});
+
+function parametrsGradeInputKitRemoveEventListener(e) {
+	parametrsGradeInputRemoveKit(e.target);
+}
+settingsForm.querySelectorAll('.js_parametrs-grade-input-number-control-remove').forEach(element => {
+	element.addEventListener('click', parametrsGradeInputKitRemoveEventListener);
+});
+
+function parametrsGradeInputKitAddEventListener(e) {
+	parametrsGradeInputAddKit(e.target, getParametersNumber());
+}
+settingsForm.querySelectorAll('.js_parametrs-grade-input-number-control-add').forEach(element => {
+	element.addEventListener('click', parametrsGradeInputKitAddEventListener);
+});
 
 function menuButtonEventListener(event) {
 	const menuButton = this;

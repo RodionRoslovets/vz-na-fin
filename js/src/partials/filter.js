@@ -57,6 +57,11 @@ function operationСomparison(operationFirstParameters, operation, operationSeco
 }
 
 function filter(parametersKit) {
+	// Проверка на массивы с нулевыми элементами
+	for(let i=0; i < parametersKit.length; i++) {
+		if (parametersKit[i] <= 0) return false;
+	}
+	// Проверка на соотведствие данным для фильтрации
 	for (let i=0; i < filterParameters.length; i++) {
 		if(!operationСomparison(parametersKit[filterParameters[i][0]], filterParameters[i][1], parametersKit[filterParameters[i][2]])) return false;
 	}

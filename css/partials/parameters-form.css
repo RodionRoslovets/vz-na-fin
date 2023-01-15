@@ -23,12 +23,12 @@
     margin-top: 30px;
 }
 
-.parameters-form div {
+.parameters-form > div {
     display: flex;
     flex-direction: column;
     
     width: 100%;
-    margin-bottom: 30px;
+    padding-bottom: 30px;
 }
 
 .parameters-form__parameters-generate-block {
@@ -47,7 +47,4 @@
 }
 
 @media screen and (min-width: 992px) {
-    .parameters-form div {
-        width: 50%;
-    }
 }

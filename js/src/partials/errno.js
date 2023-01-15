@@ -13,7 +13,7 @@ function setFilterParametersError() {
 }
 
 function setGradeValuesError() {
-    errorField.innerHTML += `Введите пожалуйста корректную строку для вычисления оценки`;
+    errorField.innerHTML += `Введите пожалуйста корректные данные для вычисления оценок`;
 }
 
 

@@ -6,6 +6,10 @@ body {
     cursor: wait;
 }
 
+.active {
+    display: block;
+}
+
 @media screen and (min-width: 576px) {
     body {
         font-size: 20px;

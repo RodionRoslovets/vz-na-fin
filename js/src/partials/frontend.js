@@ -1,4 +1,6 @@
 import {getParametersKits} from "./generate";
+import {getGradeNumbers} from "./grade";
+import {grathDraw} from "./grathic";
 
 let resultTable,
 	errnoField;
@@ -46,7 +48,6 @@ function getParametersKitsOnThisPage() {
 }
 
 function paginationItemEventListenerOnClick(event) {
-	console.log(event);
 	const paginationItem = this;
 	const paginationBlock = paginationItem.parentNode;
 	paginationBlock.querySelectorAll('.open').forEach(function(element){
@@ -72,11 +73,16 @@ function resultTableDraw(gradeExist) {
 		headerRow.classList.add('parameters-table__header-row');
 
 		addTableHeaderItem(headerRow, `№`);
-		let parametersNumber = gradeExist ? parametersKitsArray[0].length : parametersKitsArray[0].length + 1;
+		let gradeNumbers = getGradeNumbers();
+		let parametersNumber = parametersKitsArray[0].length - gradeNumbers;
+		parametersNumber = gradeExist ? parametersNumber : parametersNumber + 1;
 		for (let i = 1; i < parametersNumber; i++) {
 			addTableHeaderItem(headerRow, `p${i}`);
 		}
 		if (gradeExist) {
+			for (let i = 1; i <= gradeNumbers; i++) {
+				addTableHeaderItem(headerRow, `q${i}`)
+			}
 			addTableHeaderItem(headerRow, `Q`)
 		}
 		tableHeader.append(headerRow);
@@ -119,10 +125,14 @@ function resultTableDraw(gradeExist) {
 }
 
 function resultAdd(gradeExist) {
+	// Вывод таблицы
 	setResultTablePageNumber(getParametersKits());
 	resultTableOpenPage = 1;
 	resultTableDraw(gradeExist);
-	document.querySelector('.js_result-block').style.display = 'block';
+	document.querySelector('.js_result-block').classList.add('active');
+
+	//Вывод графиков
+	grathDraw();
 }
 
 function generateBegin() {
@@ -133,6 +143,97 @@ function generateEnd() {
 	document.body.classList.remove('calculate');
 }
 
+function addGradeTableHeaderItem(headerRow, itemName) {
+	const headerItem = document.createElement("td");
+	headerItem.classList.add('parameters-grade-table__header-item');
+	headerItem.classList.add('parameters-grade-table__item');
+	headerItem.innerHTML = itemName;
+	headerRow.append(headerItem);
+}
+
+function addGradeTableItem(parametersRow, text = 0) {
+	const parametersItem = document.createElement("td");
+	parametersItem.classList.add('parameters-grade-table__item');
+	let parametersItemInput;
+
+	if (text) {
+		parametersItemInput = document.createElement("div");
+		parametersItemInput.classList.add('parameters-grade-table__input');
+		parametersItemInput.classList.add('parameters-grade-table__input--text');
+		parametersItemInput.innerHTML = text;
+	} else {
+		parametersItemInput = document.createElement("input");
+		//parametersItemInput.setAttribute('type', 'number');
+		parametersItemInput.classList.add('parameters-grade-table__input');
+		parametersItemInput.classList.add('js_parameters-grade-table-item-input');
+	}
+	
+	parametersItem.append(parametersItemInput);
+	
+	parametersRow.append(parametersItem);
+}
+
+function createGradeInputTable(parametersNumber) {
+	const table = document.createElement("table");
+	table.classList.add('parameters-grade-table');
+
+	// Создание шапки таблицы
+	const tableHeader = document.createElement("thead");
+	const headerRow = document.createElement("tr");
+	headerRow.classList.add('parameters-grade-table__header-row');
+
+	addGradeTableHeaderItem(headerRow, `№`);
+	for (let i = 0; i < parametersNumber; i++) {
+		addGradeTableHeaderItem(headerRow, `q${i}`);
+	}
+	tableHeader.append(headerRow);
+	table.append(tableHeader);
+
+	// Наполнение таблицы
+	const oldTable = document.querySelector(".js_parametrs-grade-input .js-parameters-grade-table-block table tbody");
+	let oldTableRowsNumber = oldTable ? oldTable.querySelectorAll("tr").length : 1;
+	const tableBody = document.createElement("tbody");
+	oldTableRowsNumber++;
+	for (let n = 1; n < oldTableRowsNumber; n++) {
+		const parametersRow = document.createElement("tr");
+		parametersRow.classList.add('parameters-grade-table__row');
+		parametersRow.classList.add('js_parameters-grade-table-row');
+
+		addGradeTableItem(parametersRow, n);
+		for(let i=0; i < parametersNumber; i++) {
+			addGradeTableItem(parametersRow);
+		}
+
+		tableBody.append(parametersRow);
+	}
+
+	table.append(tableBody);
+
+	return table
+}
+
+function parametrsGradeInputRemoveKit(element) {
+	const gradeTable = element.closest(".js_parametrs-grade-input").querySelector(".js-parameters-grade-table-block");
+	const tableBody = gradeTable.querySelector("tbody");
+	const tableLastRows = tableBody.querySelectorAll("tr");
+	if (tableLastRows.length > 1) {
+		tableBody.removeChild(tableLastRows[tableLastRows.length - 1]);
+	}
+}
+
+function parametrsGradeInputAddKit(element, parametersNumber) {
+	const gradeTable = element.closest(".js_parametrs-grade-input").querySelector(".js-parameters-grade-table-block");
+	const tableBody = gradeTable.querySelector("tbody");
+	const parametersRow = document.createElement("tr");
+	parametersRow.classList.add('parameters-grade-table__row');
+	parametersRow.classList.add('js_parameters-grade-table-row');
+	addGradeTableItem(parametersRow, tableBody.querySelectorAll("tr").length + 1);
+	for(let i=0; i < parametersNumber; i++) {
+		addGradeTableItem(parametersRow);
+	}
+	tableBody.append(parametersRow);
+}
+
 export {
 	clear,
 	resultAdd,
@@ -140,4 +241,7 @@ export {
 	generateEnd,
 	setResultTable,
 	setErrorField,
+	createGradeInputTable,
+	parametrsGradeInputRemoveKit,
+	parametrsGradeInputAddKit,
 };

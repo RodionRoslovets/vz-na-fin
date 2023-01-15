@@ -2,6 +2,10 @@
     display: none;
 }
 
+.result-block.active {
+    display: block;
+}
+
 .result-table {
     display: none;
 }
@@ -47,12 +51,13 @@
     width: 100%;
 }
 
-.result-grath {
+.result-graths {
     display: none;
+    text-align: center;
 }
 
-.active {
-    display: block;
+.result-graths canvas {
+    margin: 25px 0 45px;
 }
 
 @media screen and (min-width: 576px) {

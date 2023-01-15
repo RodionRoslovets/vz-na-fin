@@ -1,17 +1,32 @@
-let gradeExist = true;
+let gradeExist = true,
+    gradeKitNumbers = 0;
 let gradeValues = [];
 
-function setGradeValues(values, parametersNumber) {
+function setGradeValues(valuesTable, parametersNumber) {
+    let gradeKit;
     gradeExist = true;
-    if (values) {
-        gradeValues = values.split(', ');
-        if (gradeValues.length != parametersNumber) return false;
-        for(let i = 0; i < gradeValues.length; i++) {
-            if (!isFinite(gradeValues[i])) return false;
+    gradeValues = [];
+    const valuesTableRows = valuesTable.querySelector(".js-parameters-grade-table-block").querySelectorAll(".js_parameters-grade-table-row");
+    for (let j = 0; j < valuesTableRows.length; j++) {
+        gradeKit = [];
+        const inputItems = valuesTableRows[j].querySelectorAll(".js_parameters-grade-table-item-input");
+        for(let i = 0; i < inputItems.length; i++) {
+            let value = inputItems[i].value;
+            if (!value) {
+                gradeExist = false;
+                return true;
+            }
+            if (isFinite(value)) {
+                gradeKit.push(Number(inputItems[i].value));
+            } else {
+                return gradeExist = false;
+            };
         }
-    } else {
-        gradeExist = false;
+        if (gradeKit.length != parametersNumber) return gradeExist = false;
+        gradeValues.push(gradeKit);
     }
+
+    gradeKitNumbers = valuesTableRows.length;
     return true;
 }
 
@@ -20,21 +35,34 @@ function isGradeExist() {
 }
 
 function getGrade(parametersKit) {
-    let kitGrade = 0;
-    for (let i = 0; i < parametersKit.length; i++) {
-        kitGrade += parametersKit[i] * gradeValues[i];
+    let kitGrade = [], grade, gradeSum = 0;
+    for (let i = 0; i < gradeValues.length; i++) {
+        grade = 0;
+        let valuesKit = gradeValues[i];
+        for (let i = 0; i < parametersKit.length; i++) {
+            grade += parametersKit[i] * valuesKit[i];
+        }
+        gradeSum += grade;
+        kitGrade.push(grade);
     }
+    let averageGrade = gradeSum / gradeValues.length;
+    kitGrade.push(averageGrade);
     return kitGrade
+}
+
+function getGradeNumbers() {
+    return gradeKitNumbers;
 }
 
 function addGrade(parametersKit) {
     let kitArray = parametersKit.slice(0);
-    kitArray.push(getGrade(kitArray));
+    kitArray = kitArray.concat(getGrade(kitArray));
     return kitArray;
 }
 
 export {
     isGradeExist,
     setGradeValues,
-    addGrade
+    addGrade,
+    getGradeNumbers,
 };
