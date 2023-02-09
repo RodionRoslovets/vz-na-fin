@@ -16,6 +16,7 @@
 
     height: 50px;
     overflow: auto;
+    margin: 15px;
 }
 
 .result-table__pagination button {

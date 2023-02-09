@@ -1,6 +1,7 @@
 import {getParametersNumber, getParametersKits} from "./generate";
 import {getGradeNumbers} from "./grade";
 import {grathDraw} from "./grathic";
+import {setNullResaultError} from "./errno";
 
 let resultTable,
 	errnoField;
@@ -125,21 +126,26 @@ function resultTableDraw(gradeExist) {
 }
 
 function resultAdd(gradeExist) {
-	// Вывод таблицы
-	setResultTablePageNumber(getParametersKits());
-	resultTableOpenPage = 1;
-	resultTableDraw(gradeExist);
-	document.querySelector('.js_result-block').classList.add('active');
+	if (getParametersKits().length) {
+		// Вывод таблицы
+		setResultTablePageNumber(getParametersKits());
+		resultTableOpenPage = 1;
+		resultTableDraw(gradeExist);
+		document.querySelector('.js_result-block').classList.add('active');
 
-	//Вывод графиков
-	grathDraw();
+		//Вывод графиков
+		grathDraw();
 
-	// Подготовка фала на скачивание
-	downloadButtonPrepare();
+		// Подготовка фала на скачивание
+		downloadButtonPrepare();
+	} else {
+		setNullResaultError();
+	}
 }
 
 function generateBegin() {
 	document.body.classList.add('calculate');
+	document.querySelector('.js_result-block').classList.remove('active');
 }
 
 function generateEnd() {

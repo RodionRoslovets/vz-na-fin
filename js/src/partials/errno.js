@@ -16,10 +16,15 @@ function setGradeValuesError() {
     errorField.innerHTML += `Введите пожалуйста корректные данные для вычисления оценок`;
 }
 
+function setNullResaultError() {
+    errorField.innerHTML += `Подходящих элементов не найдено`;
+}
+
 
 export {
     stepError,
     setErrorField,
     setFilterParametersError,
-    setGradeValuesError
+    setGradeValuesError,
+    setNullResaultError,
 };
