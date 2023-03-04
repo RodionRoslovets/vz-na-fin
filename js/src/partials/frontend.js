@@ -76,15 +76,13 @@ function resultTableDraw(gradeExist) {
 		addTableHeaderItem(headerRow, `№`);
 		let gradeNumbers = getGradeNumbers();
 		let parametersNumber = parametersKitsArray[0].length - gradeNumbers;
-		parametersNumber = gradeExist ? parametersNumber : parametersNumber + 1;
-		for (let i = 1; i < parametersNumber; i++) {
+		for (let i = 1; i <= parametersNumber; i++) {
 			addTableHeaderItem(headerRow, `p${i}`);
 		}
 		if (gradeExist) {
 			for (let i = 1; i <= gradeNumbers; i++) {
-				addTableHeaderItem(headerRow, `q${i}`)
+				addTableHeaderItem(headerRow, `q${i}`);
 			}
-			addTableHeaderItem(headerRow, `Q`)
 		}
 		tableHeader.append(headerRow);
 		table.append(tableHeader);
@@ -192,8 +190,8 @@ function createGradeInputTable(parametersNumber) {
 	headerRow.classList.add('parameters-grade-table__header-row');
 
 	addGradeTableHeaderItem(headerRow, `№`);
-	for (let i = 0; i < parametersNumber; i++) {
-		addGradeTableHeaderItem(headerRow, `q${i}`);
+	for (let i = 1; i <= parametersNumber; i++) {
+		addGradeTableHeaderItem(headerRow, `x${i}`);
 	}
 	tableHeader.append(headerRow);
 	table.append(tableHeader);
@@ -256,12 +254,12 @@ function downloadButtonPrepare() {
 	let data = getParametersKits();
 	let dataHeader = new Array(data[0].length).fill().map(function(item, i) {
         if (i < getParametersNumber()) {
-			return `p${i + 1}`
+			return `p${i + 1}`;
 		}
 		if (i < getParametersNumber() + getGradeNumbers()) {
-			return `q${i + 1 - getParametersNumber()}`
+			return `q${i + 1 - getParametersNumber()}`;
 		}
-		return `Q`
+		return `undefined`;
     });
 	data.unshift(dataHeader);
 	data = data.map(e => e.join(";")).join("\n");

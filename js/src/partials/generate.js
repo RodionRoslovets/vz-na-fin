@@ -42,7 +42,7 @@ function toInteger() {
 
 function toDouble(parametersKit) {
 	return parametersKit.map((item) => {
-		return item / parameterDecimalCount;
+		return Math.round((item / parameterDecimalCount) * 100) / 100;
 	});
 }
 

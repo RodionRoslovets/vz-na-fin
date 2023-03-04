@@ -35,18 +35,15 @@ function isGradeExist() {
 }
 
 function getGrade(parametersKit) {
-    let kitGrade = [], grade, gradeSum = 0;
+    let kitGrade = [], grade;
     for (let i = 0; i < gradeValues.length; i++) {
         grade = 0;
         let valuesKit = gradeValues[i];
         for (let i = 0; i < parametersKit.length; i++) {
             grade += parametersKit[i] * valuesKit[i];
         }
-        gradeSum += grade;
         kitGrade.push(grade);
     }
-    let averageGrade = gradeSum / gradeValues.length;
-    kitGrade.push(averageGrade);
     return kitGrade
 }
 
