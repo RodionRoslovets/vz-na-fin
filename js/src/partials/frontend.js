@@ -102,6 +102,26 @@ function resultTableDraw(gradeExist) {
 		});
 		table.append(tableBody);
 
+		// Добавление средних значений в конец таблицы:
+		const averageRow = document.createElement("tr");
+		averageRow.classList.add('parameters-table__row');
+		addTableItem(averageRow, "Среднее<br>всех<br>значений<br>столбца");
+
+		const average = new Array(parametersKitsArray[0].length).fill(0);
+		let allParam = getParametersKits();
+		let allParamLength = allParam.length;
+		allParam.forEach((kit, num) => {
+			kit.forEach((item, i) => {
+				average[i] += item;
+			});
+		});
+		average.forEach((item, i) => {
+			addTableItem(averageRow, Math.round((item / allParamLength) * 100) / 100);
+		});
+
+		tableBody.append(averageRow);
+		table.append(tableBody);
+
 		// Добавление пагинации
 		const resultTableBlock = resultTable.parentNode;
 		const paginationBlock = resultTableBlock.querySelector('.js_result-table-pagination');

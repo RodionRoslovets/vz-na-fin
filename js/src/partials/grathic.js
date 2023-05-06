@@ -13,11 +13,13 @@ function grathDraw() {
     const grathBlock = document.querySelector('.js_result-graths');
     grathBlock.innerHTML = '';
 
-    // если количество точек в графиках больше 64, ничего не рисуем
-    if (parametersKits.length < 64 && parametersNumber < 64) {
+    // если количество параметров в графиках больше 64 и элементов в конечной выборке больше 128, ничего не рисуем
+    if (parametersKits.length < 128 && parametersNumber < 64) {
         const parametersGrathBlock = document.createElement("div"),
-            gradesGrathBlock = document.createElement("div");
+            gradesGrathBlock = document.createElement("div"),
+            parametersGrathBlockSecond = document.createElement("div");
         const parametersGrath = document.createElement("canvas"),
+            parametersGrathSecond = document.createElement("canvas"),
             gradesGrath = document.createElement("canvas");
 
         let labels, datasets;
@@ -28,12 +30,12 @@ function grathDraw() {
         parametersGrathBlock.append(parametersGrath);
 
         labels = new Array(parametersNumber).fill().map(function(item, i) {
-            return `Коофициент №${i + 1}`;
+            return `Показатель p${i + 1}`;
         });
         datasets = new Array(parametersKits.length).fill().map(function(item, i) {
             return {
                 type: 'line',
-                label: `p${i + 1}`,
+                label: `Набор №${i + 1}`,
                 data: parametersKits[i].slice(0, parametersNumber),
             };
         });
@@ -51,8 +53,39 @@ function grathDraw() {
             }
         });
 
+        // parameters kits grathic
+        grathBlock.append(parametersGrathBlockSecond);
+        parametersGrathBlockSecond.append(`Граффик изменения значений наборов весовых коофициентов`);
+        parametersGrathBlockSecond.append(parametersGrathSecond);
+
+        labels = new Array(parametersKits.length).fill().map(function(item, i) {
+            return `Набор №${i + 1}`;
+        });
+        datasets = new Array(parametersNumber).fill().map(function(item, i) {
+            return {
+                type: 'line',
+                label: `Показатель p${i + 1}`,
+                data: parametersKits.map(function(item, k) {
+                    return item[i]
+                }),
+            };
+        });
+        new Chart (parametersGrathSecond, {
+            data: {
+            labels: labels,
+            datasets: datasets,
+            },
+            options: {
+                scales: {
+                    y: {
+                    beginAtZero: true
+                    }
+                }
+            }
+        });
+
         // grades grathic
-        if (isGradeExist() && gradeNumbers > 1) {
+        if (isGradeExist() && gradeNumbers > 1 && gradeNumbers < 64) {
             grathBlock.append(gradesGrathBlock);
             gradesGrathBlock.append(`Граффик изменения значений оценок весовых коофициентов`);
             gradesGrathBlock.append(gradesGrath);
