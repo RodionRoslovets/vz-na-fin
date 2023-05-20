@@ -1,4 +1,4 @@
-import {getParametersNumber, getParametersKits} from "./generate";
+import {getParametersNumber, getParametersKits, getAverage} from "./generate";
 import {getGradeNumbers} from "./grade";
 import {grathDraw} from "./grathic";
 import {setNullResaultError} from "./errno";
@@ -107,16 +107,9 @@ function resultTableDraw(gradeExist) {
 		averageRow.classList.add('parameters-table__row');
 		addTableItem(averageRow, "Среднее<br>всех<br>значений<br>столбца");
 
-		const average = new Array(parametersKitsArray[0].length).fill(0);
-		let allParam = getParametersKits();
-		let allParamLength = allParam.length;
-		allParam.forEach((kit, num) => {
-			kit.forEach((item, i) => {
-				average[i] += item;
-			});
-		});
+		const average = getAverage();
 		average.forEach((item, i) => {
-			addTableItem(averageRow, Math.round((item / allParamLength) * 100) / 100);
+			addTableItem(averageRow, item);
 		});
 
 		tableBody.append(averageRow);
@@ -282,7 +275,7 @@ function downloadButtonPrepare() {
 		return `undefined`;
     });
 	data.unshift(dataHeader);
-	data = data.map(e => e.join(";")).join("\n");
+	data = data.map(e => e.join(";")).join("\n").replaceAll('.', ',');
 	
 	anchor.href = `data:text/csv;charset=utf-8,${encodeURIComponent(data)}`;
 	anchor.download = 'data.csv';

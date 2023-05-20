@@ -12,7 +12,8 @@ let parametersNumber = 3,
 	parametersKitsGenerateNumber;
 
 let parametersKitsArray = [],
-	parametersKitsArrayGeneratePull = [];
+	parametersKitsArrayGeneratePull = [],
+	average = [];
 
 const DecimalPlacesNumber = x => ( (x.toString().includes('.')) ? (x.toString().split('.').pop().length) : (0) );
 
@@ -23,6 +24,24 @@ function getParametersNumber() {
 function setParametersNumber(number) {
 	parametersNumber = number;
 	return parametersNumber;
+}
+
+function addAverage() {
+	average = new Array(parametersKitsArray[0].length).fill(0);
+	let allParam = parametersKitsArray;
+	let allParamLength = allParam.length;
+	allParam.forEach((kit, num) => {
+		kit.forEach((item, i) => {
+			average[i] += item;
+		});
+	});
+	average = average.map((item, i) => {
+		return Math.round((item / allParamLength) * 100) / 100;
+	});
+}
+
+function getAverage() {
+	return average;
 }
 
 function decimalPlacesCount() {
@@ -145,6 +164,9 @@ function parametersKitsArrayGenerateAfter() {
 
 	// Принудительное очищение памяти, что бы точно очистелась на этом моменте.
 	parametersKitsArrayGeneratePull = [];
+	
+	// Подсчёт средних значений
+	addAverage();
 
 	// Вывод результата
 	frontend.resultAdd(isGradeExist());
@@ -201,4 +223,5 @@ export {
 	setParametersNumber,
 	submitToGenerate,
 	getParametersKits,
+	getAverage,
 };

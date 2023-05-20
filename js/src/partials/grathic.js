@@ -1,7 +1,7 @@
 const { Chart, registerables } = require("/node_modules/chart.js/dist/chart.js");
 Chart.register(...registerables);
 
-import {getParametersNumber, getParametersKits} from "./generate";
+import {getParametersNumber, getParametersKits, getAverage} from "./generate";
 import {isGradeExist, getGradeNumbers} from "./grade";
 
 function grathDraw() {
@@ -12,6 +12,8 @@ function grathDraw() {
 
     const grathBlock = document.querySelector('.js_result-graths');
     grathBlock.innerHTML = '';
+
+    const parametersAverage = getAverage();
 
     // если количество параметров в графиках больше 64 и элементов в конечной выборке больше 128, ничего не рисуем
     if (parametersKits.length < 128 && parametersNumber < 64) {
@@ -39,6 +41,12 @@ function grathDraw() {
                 data: parametersKits[i].slice(0, parametersNumber),
             };
         });
+        // datasets.push({
+        //     type: 'line',
+        //     label: `Среднее значение`,
+        //     data: parametersAverage.slice(0, parametersNumber),
+        // });
+        
         new Chart (parametersGrath, {
             data: {
             labels: labels,
@@ -70,6 +78,7 @@ function grathDraw() {
                 }),
             };
         });
+
         new Chart (parametersGrathSecond, {
             data: {
             labels: labels,
@@ -102,6 +111,7 @@ function grathDraw() {
                     }),
                 };
             });
+
             new Chart (gradesGrath, {
                 data: {
                 labels: labels,
