@@ -126,6 +126,48 @@ function grathDraw() {
                 }
             });
         }
+
+        for (let i = 0; i < parametersNumber; i++) {
+            let parameterGrathBlock = document.createElement("div");
+            let parameterGrath = document.createElement("canvas");
+            // parameters kits grathic
+            grathBlock.append(parameterGrathBlock );
+            parameterGrathBlock.append(`Граффик изменения значений параметра p${i + 1}`);
+            parameterGrathBlock.append(parameterGrath);
+
+            labels = new Array(parametersKits.length).fill().map(function(item, k) {
+                return `Набор №${k + 1}`;
+            });
+            datasets = new Array(parametersNumber).fill().map(function(item, k) {
+                return {
+                    type: 'line',
+                    label: `Показатель p${i + 1}`,
+                    data: parametersKits.map(function(item, j) {
+                        return item[i]
+                    }),
+                };
+            });
+            datasets.push({
+                type: 'line',
+                label: `Среднее значение параметра p${i + 1}`,
+                data: parametersKits.map(function(item, j) {
+                    return parametersAverage[i]
+                }),
+            });
+            new Chart (parameterGrath, {
+                data: {
+                labels: labels,
+                datasets: datasets,
+                },
+                options: {
+                    scales: {
+                        y: {
+                        beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
     } else {
         grathBlock.append(`В выборке слишком много элементов для отображения граффика.`);
     }
