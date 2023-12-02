@@ -1,13 +1,15 @@
 const { Chart, registerables } = require("/node_modules/chart.js/dist/chart.js");
 Chart.register(...registerables);
 
-import {getParametersNumber, getParametersKits, getAverage} from "./generate";
+import {getParametersNumber, getParametersKits, getAverage, getParameterKitSumm, getParameterStep} from "./generate";
 import {isGradeExist, getGradeNumbers} from "./grade";
 
 function grathDraw() {
     let parametersKits = getParametersKits(),
         gradeNumbers = getGradeNumbers(),
-        parametersNumber = getParametersNumber();
+        parametersNumber = getParametersNumber(),
+        parameterKitSumm = getParameterKitSumm(),
+        parameterStep =  getParameterStep();
 
 
     const grathBlock = document.querySelector('.js_result-graths');
@@ -15,159 +17,98 @@ function grathDraw() {
 
     const parametersAverage = getAverage();
 
-    // если количество параметров в графиках больше 64 и элементов в конечной выборке больше 128, ничего не рисуем
-    if (parametersKits.length < 128 && parametersNumber < 64) {
+    // если количество параметров в графиках больше 64, ничего не рисуем
+    if (parametersNumber < 64) {
         const parametersGrathBlock = document.createElement("div"),
-            gradesGrathBlock = document.createElement("div"),
-            parametersGrathBlockSecond = document.createElement("div");
-        const parametersGrath = document.createElement("canvas"),
-            parametersGrathSecond = document.createElement("canvas"),
-            gradesGrath = document.createElement("canvas");
+            gradesGrathBlock = document.createElement("div");
 
-        let labels, datasets;
+        let labels, datasets, values, valuesNumber;
 
         // parameters kits grathic
         grathBlock.append(parametersGrathBlock);
-        parametersGrathBlock.append(`Граффик изменения значений наборов весовых коофициентов`);
-        parametersGrathBlock.append(parametersGrath);
+        parametersGrathBlock.append(`Граффики значений наборов весовых коофициентов`);
 
-        labels = new Array(parametersNumber).fill().map(function(item, i) {
-            return `Показатель p${i + 1}`;
-        });
-        datasets = new Array(parametersKits.length).fill().map(function(item, i) {
-            return {
-                type: 'line',
-                label: `Набор №${i + 1}`,
-                data: parametersKits[i].slice(0, parametersNumber),
-            };
-        });
-        // datasets.push({
-        //     type: 'line',
-        //     label: `Среднее значение`,
-        //     data: parametersAverage.slice(0, parametersNumber),
-        // });
-        
-        new Chart (parametersGrath, {
-            data: {
-            labels: labels,
-            datasets: datasets,
-            },
-            options: {
-                scales: {
-                    y: {
-                    beginAtZero: true
-                    }
-                }
-            }
+        valuesNumber = Math.round((parameterKitSumm/parameterStep) * 100) / 100;
+        values = new Array(valuesNumber).fill().map(function(item, i) {
+            return Math.round((parameterKitSumm - parameterStep*i) * 100) / 100;
         });
 
-        // parameters kits grathic
-        grathBlock.append(parametersGrathBlockSecond);
-        parametersGrathBlockSecond.append(`Граффик изменения значений наборов весовых коофициентов`);
-        parametersGrathBlockSecond.append(parametersGrathSecond);
-
-        labels = new Array(parametersKits.length).fill().map(function(item, i) {
-            return `Набор №${i + 1}`;
+        labels = new Array(valuesNumber).fill().map(function(item, i) {
+            return `${values[i]}`;
         });
         datasets = new Array(parametersNumber).fill().map(function(item, i) {
-            return {
-                type: 'line',
-                label: `Показатель p${i + 1}`,
-                data: parametersKits.map(function(item, k) {
-                    return item[i]
-                }),
-            };
-        });
-
-        new Chart (parametersGrathSecond, {
-            data: {
-            labels: labels,
-            datasets: datasets,
-            },
-            options: {
-                scales: {
-                    y: {
-                    beginAtZero: true
+            const parametersGrath = document.createElement("canvas");
+            parametersGrathBlock.append(parametersGrath);
+            return new Chart (parametersGrath, {
+                data: {
+                labels: labels,
+                datasets: [{
+                    type: 'bar',
+                    label: `Показатель p${i + 1}`,
+                    data: new Array(values.length).fill().map(function(item, k) {
+                        return parametersKits.reduce(function(currentSum, currentKit) {
+                            return currentKit[i] == values[k] ? ++currentSum : currentSum;
+                        }, 0);
+                    }),
+                }],
+                },
+                options: {
+                    scales: {
+                        y: {
+                        beginAtZero: true
+                        }
                     }
                 }
-            }
+            });
         });
 
         // grades grathic
         if (isGradeExist() && gradeNumbers > 1 && gradeNumbers < 64) {
             grathBlock.append(gradesGrathBlock);
-            gradesGrathBlock.append(`Граффик изменения значений оценок весовых коофициентов`);
-            gradesGrathBlock.append(gradesGrath);
+            gradesGrathBlock.append(`Граффики изменения значений оценок весовых коофициентов`);
             
-            labels = new Array(parametersKits.length).fill().map(function(item, i) {
-                return `Набор №${i + 1}`;
-            });
-            datasets = new Array(gradeNumbers).fill().map(function(item, i) {
-                return {
-                    type: 'line',
-                    label: `q${i + 1}`,
-                    data: parametersKits.map( function(item, k) {
-                        return item[parametersNumber + i];
-                    }),
-                };
-            });
+            for (let i = 0; gradeNumbers > i; i++) {
+                let values = Array();
+                let kit = parametersKits.map((kit,k)=>{
+                    let num = parametersNumber+i;
+                    return kit.slice(num, num+1);
+                });
+                kit.forEach((element) => {
+                    if (!values.includes(element)) {
+                        values.push(element);
+                    }
+                });
+                valuesNumber = values.length;
 
-            new Chart (gradesGrath, {
-                data: {
-                labels: labels,
-                datasets: datasets,
-                },
-                options: {
-                    scales: {
-                        y: {
-                        beginAtZero: true
+                labels = new Array(valuesNumber).fill().map(function(item, i) {
+                    return `${values[i]}`;
+                });
+
+                const gradesGrath = document.createElement("canvas");
+                gradesGrathBlock.append(gradesGrath);
+                new Chart (gradesGrath, {
+                    data: {
+                    labels: labels,
+                    datasets: [{
+                        type: 'bar',
+                        label: `Оценка q${i + 1}`,
+                        data: new Array(values.length).fill().map(function(item, k) {
+                            return parametersKits.reduce(function(currentSum, currentKit) {
+                                return currentKit[parametersNumber + i] == values[k] ? ++currentSum : currentSum;
+                            }, 0);
+                        }),
+                    }],
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                            beginAtZero: true
+                            }
                         }
                     }
-                }
-            });
+                });
+            }
         }
-
-        for (let i = 0; i < parametersNumber; i++) {
-            let parameterGrathBlock = document.createElement("div");
-            let parameterGrath = document.createElement("canvas");
-            // parameters kits grathic
-            grathBlock.append(parameterGrathBlock );
-            parameterGrathBlock.append(`Граффик изменения значений параметра p${i + 1}`);
-            parameterGrathBlock.append(parameterGrath);
-
-            labels = new Array(parametersKits.length).fill().map(function(item, k) {
-                return `Набор №${k + 1}`;
-            });
-            datasets = new Array({
-                type: 'line',
-                label: `Показатель p${i + 1}`,
-                data: parametersKits.map(function(item, j) {
-                    return item[i]
-                }),
-            });
-            datasets.push({
-                type: 'line',
-                label: `Среднее значение параметра p${i + 1}`,
-                data: parametersKits.map(function(item, j) {
-                    return parametersAverage[i]
-                }),
-            });
-            new Chart (parameterGrath, {
-                data: {
-                labels: labels,
-                datasets: datasets,
-                },
-                options: {
-                    scales: {
-                        y: {
-                        beginAtZero: true
-                        }
-                    }
-                }
-            });
-        }
-    } else {
-        grathBlock.append(`В выборке слишком много элементов для отображения граффика.`);
     }
 }
 

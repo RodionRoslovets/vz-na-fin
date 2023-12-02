@@ -21,6 +21,14 @@ function getParametersNumber() {
 	return Number(parametersNumber);
 }
 
+function getParameterKitSumm() {
+	return Number(parameterKitSumm);
+}
+
+function getParameterStep() {
+	return Number(parameterStep);
+}
+
 function setParametersNumber(number) {
 	parametersNumber = number;
 	return parametersNumber;
@@ -224,4 +232,6 @@ export {
 	submitToGenerate,
 	getParametersKits,
 	getAverage,
+	getParameterKitSumm,
+	getParameterStep,
 };

@@ -23,17 +23,8 @@ function clear(errnoField, parametersTable) {
 	errnoField.innerHTML = '';
 }
 
-function addTableHeaderItem(headerRow, itemName) {
-	const headerItem = document.createElement("td");
-	headerItem.classList.add('parameters-table__header-item');
-	headerItem.classList.add('parameters-table__item');
-	headerItem.innerHTML = itemName;
-	headerRow.append(headerItem);
-}
-
 function addTableItem(parametersRow, itemValue) {
 	const parametersItem = document.createElement("td");
-	parametersItem.classList.add('parameters-table__item');
 	parametersItem.innerHTML = itemValue;
 	
 	parametersRow.append(parametersItem);
@@ -65,23 +56,21 @@ function resultTableDraw(gradeExist) {
 	const parametersKitsArray = getParametersKitsOnThisPage();
 	if (parametersKitsArray.length > 0) {
 		const table = document.createElement("table");
-		table.classList.add('parameters-table__table');
 		resultTable.append(table);
 
 		// Создание шапки таблицы
 		const tableHeader = document.createElement("thead");
 		const headerRow = document.createElement("tr");
-		headerRow.classList.add('parameters-table__header-row');
 
-		addTableHeaderItem(headerRow, `№`);
+		addTableItem(headerRow, `№`);
 		let gradeNumbers = getGradeNumbers();
 		let parametersNumber = parametersKitsArray[0].length - gradeNumbers;
 		for (let i = 1; i <= parametersNumber; i++) {
-			addTableHeaderItem(headerRow, `p${i}`);
+			addTableItem(headerRow, `p${i}`);
 		}
 		if (gradeExist) {
 			for (let i = 1; i <= gradeNumbers; i++) {
-				addTableHeaderItem(headerRow, `q${i}`);
+				addTableItem(headerRow, `q${i}`);
 			}
 		}
 		tableHeader.append(headerRow);
@@ -92,7 +81,6 @@ function resultTableDraw(gradeExist) {
 		const itemNumberShift = itemNumberOnPage * (resultTableOpenPage - 1) + 1;
 		parametersKitsArray.forEach((kit, num) => {
 			const parametersRow = document.createElement("tr");
-			parametersRow.classList.add('parameters-table__row');
 			addTableItem(parametersRow, itemNumberShift + num);
 			kit.forEach((item, i) => {
 				addTableItem(parametersRow, item);
@@ -100,7 +88,6 @@ function resultTableDraw(gradeExist) {
 	
 			tableBody.append(parametersRow);
 		});
-		table.append(tableBody);
 
 		// Добавление средних значений в конец таблицы:
 		const averageRow = document.createElement("tr");
@@ -136,6 +123,54 @@ function resultTableDraw(gradeExist) {
 	}
 }
 
+function addGradePDraw() {
+	let numGrade = getGradeNumbers(),
+	parametersKits = getParametersKits(),
+	shift = getParametersNumber(),
+	arrLength = parametersKits.length;
+
+	if (numGrade > 1) {
+		// Создание матрицы из количества элементов
+		let resultMatrix = Array.from({ length: numGrade }, (_, i) =>
+			Array.from({ length: numGrade }, (_, j) => {
+				if (i == j) return 0;
+				return  Math.round((parametersKits.filter((value, index) => value[shift+i] > parametersKits[index][shift+j]).length/arrLength) * 100) / 100;
+			})
+		);
+
+		// Выводим результат в таблице
+		const table = document.createElement("table");
+		document.querySelector('.js_result-grade-p-table').append(table);
+		document.querySelector('[data-menu-name="grade-p"]').classList.remove('hide');
+	
+		// Создание шапки таблицы
+		const tableHeader = document.createElement("thead");
+		const headerRow = document.createElement("tr");
+	
+		addTableItem(headerRow, `№`);
+		for (let i = 1; i <= resultMatrix.length; i++) {
+			addTableItem(headerRow, `q${i}`);
+		}
+		tableHeader.append(headerRow);
+		table.append(tableHeader);
+	
+		// Наполнение таблицы
+		const tableBody = document.createElement("tbody");
+		resultMatrix.forEach((kit, num) => {
+			const row = document.createElement("tr");
+			addTableItem(row, `q${num+1}`);
+			kit.forEach((item, i) => {
+				addTableItem(row, item);
+			});
+		
+			tableBody.append(row);
+		});
+		table.append(tableBody);
+	} else {
+		document.querySelector('[data-menu-name="grade-p"]').classList.add('hide');
+	}
+};
+
 function resultAdd(gradeExist) {
 	if (getParametersKits().length) {
 		// Вывод таблицы
@@ -143,6 +178,9 @@ function resultAdd(gradeExist) {
 		resultTableOpenPage = 1;
 		resultTableDraw(gradeExist);
 		document.querySelector('.js_result-block').classList.add('active');
+
+		// Таблица вероятности оценок
+		addGradePDraw()
 
 		//Вывод графиков
 		grathDraw();

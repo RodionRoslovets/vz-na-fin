@@ -3,34 +3,22 @@
     overflow: auto;
 }
 
-.parameters-table__table {
+.parameters-table table {
     margin: 10px 0;
     text-align: end;
 }
 
-.parameters-table__row {
+.parameters-table tr {
 }
 
-.parameters-table__item {
+.parameters-table td {
     padding: 10px 15px;
 }
 
-.parameters-table__item:nth-child(2n) {
+.parameters-table td:nth-child(2n) {
     background: whitesmoke;
 }
 
-.parameters-table__item:nth-child(1) {
+.parameters-table td:nth-child(1) {
     background: rgb(226, 255, 173);
-}
-
-@media screen and (min-width: 576px) {
-    
-}
-
-@media screen and (min-width: 768px) {
-    
-}
-
-@media screen and (min-width: 992px) {
-    
 }
