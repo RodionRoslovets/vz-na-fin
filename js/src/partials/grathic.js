@@ -71,7 +71,7 @@ function grathDraw() {
                 let values = Array();
                 let kit = parametersKits.map((kit,k)=>{
                     let num = parametersNumber+i;
-                    return kit.slice(num, num+1);
+                    return kit[num];
                 });
                 kit.forEach((element) => {
                     if (!values.includes(element)) {

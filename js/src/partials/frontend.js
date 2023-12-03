@@ -140,7 +140,12 @@ function addGradePDraw() {
 
 		// Выводим результат в таблице
 		const table = document.createElement("table");
-		document.querySelector('.js_result-grade-p-table').append(table);
+		const tableBlock = document.querySelector('.js_result-grade-p-table');
+		tableBlock.innerHTML = "";
+		tableBlock.append(`
+		Таблица стахастического доминирования оценок —
+		Вероятность, что оценка набора строки больше оценки набора столбца`);
+		tableBlock.append(table);
 		document.querySelector('[data-menu-name="grade-p"]').classList.remove('hide');
 	
 		// Создание шапки таблицы
