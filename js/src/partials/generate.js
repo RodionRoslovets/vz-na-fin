@@ -35,17 +35,19 @@ function setParametersNumber(number) {
 }
 
 function addAverage() {
-	average = new Array(parametersKitsArray[0].length).fill(0);
-	let allParam = parametersKitsArray;
-	let allParamLength = allParam.length;
-	allParam.forEach((kit, num) => {
-		kit.forEach((item, i) => {
-			average[i] += item;
+	if (parametersKitsArray[0]) {
+		average = new Array(parametersKitsArray[0].length).fill(0);
+		let allParam = parametersKitsArray;
+		let allParamLength = allParam.length;
+		allParam.forEach((kit, num) => {
+			kit.forEach((item, i) => {
+				average[i] += item;
+			});
 		});
-	});
-	average = average.map((item, i) => {
-		return Math.round((item / allParamLength) * 100) / 100;
-	});
+		average = average.map((item, i) => {
+			return Math.round((item / allParamLength) * 100) / 100;
+		});
+	}
 }
 
 function getAverage() {
