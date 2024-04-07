@@ -23,9 +23,13 @@ function clear(errnoField, parametersTable) {
 	errnoField.innerHTML = '';
 }
 
-function addTableItem(parametersRow, itemValue) {
+function addTableItem(parametersRow, itemValue, rowSettings = {}) {
 	const parametersItem = document.createElement("td");
 	parametersItem.innerHTML = itemValue;
+	if (rowSettings.colspan)
+		parametersItem.setAttribute("colspan", rowSettings.colspan);
+	if (rowSettings.rowspan)
+		parametersItem.setAttribute("rowspan", rowSettings.rowspan);
 	
 	parametersRow.append(parametersItem);
 }
@@ -60,11 +64,19 @@ function resultTableDraw(gradeExist) {
 
 		// Создание шапки таблицы
 		const tableHeader = document.createElement("thead");
-		const headerRow = document.createElement("tr");
+		let headerRow = document.createElement("tr");
 
-		addTableItem(headerRow, `№`);
+		addTableItem(headerRow, `№`, { rowspan : 2});
 		let gradeNumbers = getGradeNumbers();
 		let parametersNumber = parametersKitsArray[0].length - gradeNumbers;
+
+		addTableItem(headerRow, `Значения рандомизированных весовых коэффициентов`, { colspan : parametersNumber});
+		if (gradeExist) {
+			addTableItem(headerRow, `Рейтинг объекта`, { colspan : gradeNumbers});
+		}
+		tableHeader.append(headerRow);
+		headerRow = document.createElement("tr");
+
 		for (let i = 1; i <= parametersNumber; i++) {
 			addTableItem(headerRow, `p${i}`);
 		}
@@ -92,7 +104,7 @@ function resultTableDraw(gradeExist) {
 		// Добавление средних значений в конец таблицы:
 		const averageRow = document.createElement("tr");
 		averageRow.classList.add('parameters-table__row');
-		addTableItem(averageRow, "Среднее<br>всех<br>значений<br>столбца");
+		addTableItem(averageRow, "Среднее<br>значение");
 
 		const average = getAverage();
 		average.forEach((item, i) => {
@@ -247,7 +259,7 @@ function createGradeInputTable(parametersNumber) {
 
 	addGradeTableHeaderItem(headerRow, `№`);
 	for (let i = 1; i <= parametersNumber; i++) {
-		addGradeTableHeaderItem(headerRow, `x${i}`);
+		addGradeTableHeaderItem(headerRow, `X<sub>${i}</sub>`);
 	}
 	tableHeader.append(headerRow);
 	table.append(tableHeader);
