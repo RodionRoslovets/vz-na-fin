@@ -78,11 +78,11 @@ function resultTableDraw(gradeExist) {
 		headerRow = document.createElement("tr");
 
 		for (let i = 1; i <= parametersNumber; i++) {
-			addTableItem(headerRow, `p${i}`);
+			addTableItem(headerRow, `p<sub>${i}</sub>`);
 		}
 		if (gradeExist) {
 			for (let i = 1; i <= gradeNumbers; i++) {
-				addTableItem(headerRow, `q${i}`);
+				addTableItem(headerRow, `q<sub>${i}</sub>`);
 			}
 		}
 		tableHeader.append(headerRow);
@@ -166,7 +166,7 @@ function addGradePDraw() {
 	
 		addTableItem(headerRow, `№`);
 		for (let i = 1; i <= resultMatrix.length; i++) {
-			addTableItem(headerRow, `q${i}`);
+			addTableItem(headerRow, `q<sub>${i}</sub>`);
 		}
 		tableHeader.append(headerRow);
 		table.append(tableHeader);
@@ -175,7 +175,7 @@ function addGradePDraw() {
 		const tableBody = document.createElement("tbody");
 		resultMatrix.forEach((kit, num) => {
 			const row = document.createElement("tr");
-			addTableItem(row, `q${num+1}`);
+			addTableItem(row, `q<sub>${num+1}</sub>`);
 			kit.forEach((item, i) => {
 				addTableItem(row, item);
 			});
