@@ -6,9 +6,14 @@
 .parameters-table table {
     margin: 10px 0;
     text-align: end;
+    border-collapse: collapse;
 }
 
 .parameters-table tr {
+}
+
+.parameters-table tbody tr {
+    border-bottom: 1px solid #fff;
 }
 
 .parameters-table td {
@@ -21,6 +26,11 @@
 
 .parameters-table td:nth-child(1) {
     background: rgb(226, 255, 173);
+}
+
+.parameters-table thead td {
+    text-align: center;
+    vertical-align: middle;
 }
 
 .parameters-table thead td:nth-child(2n),

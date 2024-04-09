@@ -30,6 +30,8 @@ function addTableItem(parametersRow, itemValue, rowSettings = {}) {
 		parametersItem.setAttribute("colspan", rowSettings.colspan);
 	if (rowSettings.rowspan)
 		parametersItem.setAttribute("rowspan", rowSettings.rowspan);
+	if (rowSettings.style)
+		parametersItem.setAttribute("style", rowSettings.style);
 	
 	parametersRow.append(parametersItem);
 }
@@ -69,10 +71,17 @@ function resultTableDraw(gradeExist) {
 		addTableItem(headerRow, `№`, { rowspan : 2});
 		let gradeNumbers = getGradeNumbers();
 		let parametersNumber = parametersKitsArray[0].length - gradeNumbers;
+		const borderStyle = "1px solid #000";
 
-		addTableItem(headerRow, `Значения рандомизированных весовых коэффициентов`, { colspan : parametersNumber});
+		addTableItem(headerRow, `Значения рандомизированных весовых коэффициентов`, {
+			colspan : parametersNumber,
+		});
 		if (gradeExist) {
-			addTableItem(headerRow, `Рейтинг объекта`, { colspan : gradeNumbers});
+			addTableItem(headerRow, `Рейтинг объекта`, {
+				colspan : gradeNumbers,
+				style: `border-left: ${borderStyle};`,
+			});
+			headerRow.setAttribute("style", `border-top: ${borderStyle};`);
 		}
 		tableHeader.append(headerRow);
 		headerRow = document.createElement("tr");
@@ -82,7 +91,8 @@ function resultTableDraw(gradeExist) {
 		}
 		if (gradeExist) {
 			for (let i = 1; i <= gradeNumbers; i++) {
-				addTableItem(headerRow, `q<sub>${i}</sub>`);
+				let parameters = i == 1 ? {style: `border-left: ${borderStyle};`} :  {};
+				addTableItem(headerRow, `Q<sub>${i}</sub>`, parameters);
 			}
 		}
 		tableHeader.append(headerRow);
@@ -95,7 +105,8 @@ function resultTableDraw(gradeExist) {
 			const parametersRow = document.createElement("tr");
 			addTableItem(parametersRow, itemNumberShift + num);
 			kit.forEach((item, i) => {
-				addTableItem(parametersRow, item);
+				let parameters = i == parametersNumber ? {style: `border-left: ${borderStyle};`} :  {};
+				addTableItem(parametersRow, item, parameters);
 			});
 	
 			tableBody.append(parametersRow);
@@ -108,7 +119,8 @@ function resultTableDraw(gradeExist) {
 
 		const average = getAverage();
 		average.forEach((item, i) => {
-			addTableItem(averageRow, item);
+			let parameters = i == parametersNumber ? {style: `border-left: ${borderStyle};`} :  {};
+			addTableItem(averageRow, item, parameters);
 		});
 
 		tableBody.append(averageRow);
@@ -146,6 +158,7 @@ function addGradePDraw() {
 		let resultMatrix = Array.from({ length: numGrade }, (_, i) =>
 			Array.from({ length: numGrade }, (_, j) => {
 				if (i == j) return 0;
+				if (i < j) return Math.round((1 - (parametersKits.filter((value, index) => value[shift+j] > parametersKits[index][shift+i]).length/arrLength)) * 100) / 100;
 				return  Math.round((parametersKits.filter((value, index) => value[shift+i] > parametersKits[index][shift+j]).length/arrLength) * 100) / 100;
 			})
 		);
@@ -166,7 +179,7 @@ function addGradePDraw() {
 	
 		addTableItem(headerRow, `№`);
 		for (let i = 1; i <= resultMatrix.length; i++) {
-			addTableItem(headerRow, `q<sub>${i}</sub>`);
+			addTableItem(headerRow, `Q<sub>${i}</sub>`);
 		}
 		tableHeader.append(headerRow);
 		table.append(tableHeader);
@@ -175,7 +188,7 @@ function addGradePDraw() {
 		const tableBody = document.createElement("tbody");
 		resultMatrix.forEach((kit, num) => {
 			const row = document.createElement("tr");
-			addTableItem(row, `q<sub>${num+1}</sub>`);
+			addTableItem(row, `Q<sub>${num+1}</sub>`);
 			kit.forEach((item, i) => {
 				addTableItem(row, item);
 			});
@@ -325,7 +338,7 @@ function downloadButtonPrepare() {
 			return `p${i + 1}`;
 		}
 		if (i < getParametersNumber() + getGradeNumbers()) {
-			return `q${i + 1 - getParametersNumber()}`;
+			return `Q${i + 1 - getParametersNumber()}`;
 		}
 		return `undefined`;
     });

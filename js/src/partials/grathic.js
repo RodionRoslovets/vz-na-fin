@@ -65,7 +65,7 @@ function grathDraw() {
         // grades grathic
         if (isGradeExist() && gradeNumbers > 1 && gradeNumbers < 64) {
             grathBlock.append(gradesGrathBlock);
-            gradesGrathBlock.append(`Граффики изменения значений оценок весовых коофициентов`);
+            gradesGrathBlock.append(`Граффики изменения рейтинговых оценок`);
             
             for (let i = 0; gradeNumbers > i; i++) {
                 let values = Array();
@@ -91,7 +91,7 @@ function grathDraw() {
                     labels: labels,
                     datasets: [{
                         type: 'bar',
-                        label: `Оценка q${i + 1}`,
+                        label: `Оценка Q${i + 1}`,
                         data: new Array(values.length).fill().map(function(item, k) {
                             return parametersKits.reduce(function(currentSum, currentKit) {
                                 return currentKit[parametersNumber + i] == values[k] ? ++currentSum : currentSum;
