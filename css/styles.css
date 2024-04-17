@@ -1,3 +1,5 @@
+@import "partials/normalize.css";
+@import "partials/common.css";
 @import "partials/parameters-table.css";
 @import "partials/parameters-form.css";
 @import "partials/parametrs-grade-input.css";

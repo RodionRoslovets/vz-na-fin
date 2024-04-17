@@ -1,56 +1,53 @@
 .parameters-form {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
 }
 
 .parameters-form input {
-    margin: 5px;
+  /* margin: 5px; */
 
-    font-family: inherit;
-    font-size: inherit;
-    line-height: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
 
-    background: none;
-    border: none;
-    border-bottom: 1px solid gray;
+  background: none;
+  /* border: none;
+  border-bottom: 1px solid gray; */
 }
 
 .parameters-form input[type="submit"] {
-    min-width: 80%;
-    background: whitesmoke;
-    border: 1px solid gray;
-    padding: 12px;
-    margin: 20px 0 30px;
+  min-width: 80%;
+  background: whitesmoke;
+  border: 1px solid gray;
+  padding: 12px;
+  margin: 20px 0 30px;
 
-    border: none;
-    cursor: pointer;
+  border: none;
+  cursor: pointer;
 }
 
 .parameters-form input[type="submit"]:hover,
 .parameters-form input[type="submit"]:active,
 .parameters-form input[type="submit"]:focus {
-    background: rgb(226, 255, 173);
+  background: rgb(226, 255, 173);
 }
 
 .parameters-form > div {
-    display: flex;
-    flex-direction: column;
-    
-    width: 100%;
-    padding-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  padding-bottom: 30px;
 }
 
 .parameters-form__parameters-generate-block {
-
 }
 
 .parameters-form__parameters-filter-block {
-
 }
 
 @media screen and (min-width: 576px) {
-    
 }
 
 @media screen and (min-width: 768px) {

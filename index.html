@@ -6,74 +6,133 @@
     <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
-    <form class="parameters-form js_parameters-form">
-        <div class="parameters-form__parameters-generate-block">
-            <label for="number">Введите количество показателей m:</label>
-            <input type="number" id="number" name="number" class="js_parametrs-number-input" min="3" placeholder="Введите количество показателей m">
-            <label for="step">Введите точность вычисления весовых коэффициентов p<sub>i</sub>:</label>
-            <input type="number" id="step" name="step" class="js_parametrs-step-input" min="0" step="0.0005" placeholder="Введите точность вычисления весовых коэффициентов, кратную 0.0005">
-        </div>
-        <div class="parameters-form__parameters-filter-block">
-            <label for="filter">Введите ограничения (по упорядочеванию показателей):</label>
-            <input type="text" id="filter" name="filter" class="js_parametrs-filter-input" placeholder="Введите ограничения (по упорядочеванию показателей)">
-            <div class="parametrs-grade-input js_parametrs-grade-input">
-                <div class=".parametrs-grade-input-title" title="Введите значения единичных показателей Xi для обектов">Введите значения единичных показателей x<sub>i</sub> для обектов</div>
-                <div class="parameters-grade-table-block js-parameters-grade-table-block"></div>
-                <div class="parametrs-grade-input__number-control js_parametrs-grade-input-number-control">
-                    <div class="js_parametrs-grade-input-number-control-remove">-</div>
-                    <div class="js_parametrs-grade-input-number-control-add">+</div>
+    <div class="max-width">
+        <form class="parameters-form js_parameters-form">
+            <div class="parameters-form__parameters-generate-block">
+                <div class="common__inputs">
+                    <label for="number">Введите количество показателей m:</label>
+                    <div class="common__button-wrapper common__button-number-wrapper">
+                        <button type="button" class="common__button-button common__button-button--decrease">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 23 23" fill="none">
+                                <rect x="7" y="12.001" width="1" height="9" transform="rotate(-90 7 12.001)" fill="#151833" fill-opacity="0.46"/>
+                            </svg>
+                        </button>
+                        <input type="number" id="number" name="number" class="js_parametrs-number-input common__input" min="3" step="1">
+                        <button type="button" class="common__button-button common__button-button--increase">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 23 23" fill="none">
+                                <rect x="11" y="7.00104" width="1" height="4" fill="#151833" fill-opacity="0.46"/>
+                                <rect x="11" y="12.001" width="1" height="4" fill="#151833" fill-opacity="0.46"/>
+                                <rect x="7" y="12.001" width="1" height="9" transform="rotate(-90 7 12.001)" fill="#151833" fill-opacity="0.46"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="common__inputs">
+                    <label for="step">Введите точность вычисления весовых коэффициентов p<sub>i</sub>:</label>
+                    <label >Введите точность вычисления весовых коэффициентов, кратную 0.0005</label>
+                    <div class="common__button-wrapper common__button-number-wrapper">
+                        <button type="button" class="common__button-button common__button-button--decrease">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 23 23" fill="none">
+                                <rect x="7" y="12.001" width="1" height="9" transform="rotate(-90 7 12.001)" fill="#151833" fill-opacity="0.46"/>
+                            </svg>
+                        </button>
+                        <input type="number" id="step" name="step" class="js_parametrs-step-input common__input" min="0" step="0.01">
+                        <button type="button" class="common__button-button common__button-button--increase">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 23 23" fill="none">
+                                <rect x="11" y="7.00104" width="1" height="4" fill="#151833" fill-opacity="0.46"/>
+                                <rect x="11" y="12.001" width="1" height="4" fill="#151833" fill-opacity="0.46"/>
+                                <rect x="7" y="12.001" width="1" height="9" transform="rotate(-90 7 12.001)" fill="#151833" fill-opacity="0.46"/>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-        <input type="submit" class="js_parametrs-form-submit" value="Рассчитать">
-    </form>
-    <div class="result-block js_result-block">
-        <div class="result-menu js_result-menu">
-            <button class="result-menu__button js_result-menu-button active" data-menu-name="table">Показать таблицу</button>
-            <button class="result-menu__button js_result-menu-button" data-menu-name="grade-p">Показать таблицу стахастического доминирования оценок</button>
-            <button class="result-menu__button js_result-menu-button" data-menu-name="grath">Показать граффики</button>
-            <a class="result-menu__button js_result-download" data-menu-name="download">Скачать вычесленный массив</a>
-        </div>
-        <div class="result-table active" data-menu-name="table">
-            <div class="parameters-table js_parameters-table"></div>
-            <div class="result-table__pagination js_result-table-pagination">
+            <div class="parameters-form__parameters-filter-block">
+                <p>Введите ограничения (по упорядочеванию показателей):</p>
+                <div class="common__parameters-wrapper">
+                    <div class="common__filters__block">
+                        <div class="common__parameters-block">
+                            <input type="text" class="js_parametrs-step-input common__input common__input--condition common__input--condition--left">
+                            <select class="common__select">
+                                <option value=">" selected>></option>
+                                <option value="<"><</option>
+                                <option value=">=">&#8805;</option>
+                                <option value="<="><=</option>
+                            </select>
+                            <input type="text" class="js_parametrs-step-input common__input common__input--condition common__input--condition--right">
+                            <button type="button" class="common__button-button common__button-button--increase filters__bt--add">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 23 23" fill="none">
+                                    <rect x="11" y="7.00104" width="1" height="4" fill="#151833" fill-opacity="0.46"/>
+                                    <rect x="11" y="12.001" width="1" height="4" fill="#151833" fill-opacity="0.46"/>
+                                    <rect x="7" y="12.001" width="1" height="9" transform="rotate(-90 7 12.001)" fill="#151833" fill-opacity="0.46"/>
+                                </svg>
+                            </button>
+                        </div>
+                </div>
+                    
+                        
+                </div>
+                <input type="text" id="filter" name="filter" class="js_parametrs-filter-input" placeholder="Введите ограничения (по упорядочеванию показателей)">
+                <div class="parametrs-grade-input js_parametrs-grade-input">
+                    <div class=".parametrs-grade-input-title" title="Введите значения единичных показателей Xi для обектов">Введите значения единичных показателей x<sub>i</sub> для обектов</div>
+                    <div class="parameters-grade-table-block js-parameters-grade-table-block"></div>
+                    <div class="parametrs-grade-input__number-control js_parametrs-grade-input-number-control">
+                        <div class="js_parametrs-grade-input-number-control-remove">-</div>
+                        <div class="js_parametrs-grade-input-number-control-add">+</div>
+                    </div>
+                </div>
             </div>
-            <div class="result-table__pagination-info js_this-page-info"></div>
+            <input type="submit" class="js_parametrs-form-submit" value="Рассчитать">
+        </form>
+        <div class="result-block js_result-block max-width">
+            <div class="result-menu js_result-menu">
+                <button class="result-menu__button js_result-menu-button active" data-menu-name="table">Показать таблицу</button>
+                <button class="result-menu__button js_result-menu-button" data-menu-name="grade-p">Показать таблицу стахастического доминирования оценок</button>
+                <button class="result-menu__button js_result-menu-button" data-menu-name="grath">Показать граффики</button>
+                <a class="result-menu__button js_result-download" data-menu-name="download">Скачать вычесленный массив</a>
+            </div>
+            <div class="result-table active" data-menu-name="table">
+                <div class="parameters-table js_parameters-table"></div>
+                <div class="result-table__pagination js_result-table-pagination">
+                </div>
+                <div class="result-table__pagination-info js_this-page-info"></div>
+            </div>
+            <div class="result-grade-p-table js_result-grade-p-table" data-menu-name="grade-p">
+            </div>
+            <div class="result-graths js_result-graths" data-menu-name="grath">
+            </div>
         </div>
-        <div class="result-grade-p-table js_result-grade-p-table" data-menu-name="grade-p">
-        </div>
-        <div class="result-graths js_result-graths" data-menu-name="grath">
+        <div class="errno-field js_errno-field max-width"></div>
+        <div class="information-block max-width">
+            <p>Для вычисления нужно ввести количество параметров в наборе и шаг вычисления — точность. Шаг вычисления должен быть числом которому кратна сумма ряда параметров — это единица.</p>
+            <p>Также можно:</p>
+            <ul>
+                <li class="information-block__oportunity-sheet">
+                    <p>Сделать отсев вычисленного массива параметров с помощью задания системы неравенств — строки для фильтрации значений. Для этого нужно ввести строку, соответствующую следующим параметрам:</p>
+                    <ul>
+                        <li>Неравенство задаётся символами: <, >, <=, >=</li>
+                        <li>Неравенство обособлено пробелами от аргументов</li>
+                        <li>Возможно ввести несколько аргументов, через запятую</li>
+                        <li>Аргументы — номера элементов в наборе</li>
+                        <li>Несколько правил записываются через запятую и пробел после неё</li>
+                    </ul>
+                    <div class="information-block__example">
+                        Пример: 1,4 > 2, 2 <= 3 — 1 и 4 параметр больше второго, второй меньше или равен третьему.
+                    </div>
+                </li>
+                <li class="information-block__oportunity-sheet">
+                    <p>Подсчитать общий вес набора параметров, для этого можно ввести последовательность весовых коэффициентов — насколько элемент важен в общей сумме набора.</p>
+                    <ul>
+                        <li>Вводятся они в таблицу значений весовых коофициентов. Можно ввести несколько наборов.</li>
+                    </ul>
+                    <div class="information-block__example">
+                        Пример для четырёх параметров: 1, 0.5, 0.7, 0.2
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
-    <div class="errno-field js_errno-field"></div>
-    <div class="information-block">
-        <p>Для вычисления нужно ввести количество параметров в наборе и шаг вычисления — точность. Шаг вычисления должен быть числом которому кратна сумма ряда параметров — это единица.</p>
-        <p>Также можно:</p>
-        <ul>
-            <li class="information-block__oportunity-sheet">
-                <p>Сделать отсев вычисленного массива параметров с помощью задания системы неравенств — строки для фильтрации значений. Для этого нужно ввести строку, соответствующую следующим параметрам:</p>
-                <ul>
-                    <li>Неравенство задаётся символами: <, >, <=, >=</li>
-                    <li>Неравенство обособлено пробелами от аргументов</li>
-                    <li>Возможно ввести несколько аргументов, через запятую</li>
-                    <li>Аргументы — номера элементов в наборе</li>
-                    <li>Несколько правил записываются через запятую и пробел после неё</li>
-                </ul>
-                <div class="information-block__example">
-                    Пример: 1,4 > 2, 2 <= 3 — 1 и 4 параметр больше второго, второй меньше или равен третьему.
-                </div>
-            </li>
-            <li class="information-block__oportunity-sheet">
-                <p>Подсчитать общий вес набора параметров, для этого можно ввести последовательность весовых коэффициентов — насколько элемент важен в общей сумме набора.</p>
-                <ul>
-                    <li>Вводятся они в таблицу значений весовых коофициентов. Можно ввести несколько наборов.</li>
-                </ul>
-                <div class="information-block__example">
-                    Пример для четырёх параметров: 1, 0.5, 0.7, 0.2
-                </div>
-            </li>
-        </ul>
-    </div>
+    
     <script src="./js/script.js"></script>
 </body>
 </html>
