@@ -1,4 +1,5 @@
 @import "partials/normalize.css";
+@import "partials/colors.css";
 @import "partials/common.css";
 @import "partials/parameters-table.css";
 @import "partials/parameters-form.css";
