@@ -135,14 +135,14 @@
             </div>
             <input type="submit" class="js_parametrs-form-submit" value="Рассчитать">
         </form>
-        <div class="result-block js_result-block max-width">
+        <div class="result-block js_result-block">
             <div class="result-menu js_result-menu">
-                <button class="result-menu__button js_result-menu-button active" data-menu-name="table">Показать таблицу</button>
-                <button class="result-menu__button js_result-menu-button" data-menu-name="grade-p">Показать таблицу стахастического доминирования оценок</button>
-                <button class="result-menu__button js_result-menu-button" data-menu-name="grath">Показать граффики</button>
+                <button class="result-menu__button js_result-menu-button active" data-menu-name="grath">Графики</button>
+                <button class="result-menu__button js_result-menu-button " data-menu-name="table">Таблица</button>
+                <button class="result-menu__button js_result-menu-button" data-menu-name="grade-p">Таблица стахастического доминирования оценок</button>
                 <a class="result-menu__button js_result-download" data-menu-name="download">Скачать вычесленный массив</a>
             </div>
-            <div class="result-table active" data-menu-name="table">
+            <div class="result-table " data-menu-name="table">
                 <div class="parameters-table js_parameters-table"></div>
                 <div class="result-table__pagination js_result-table-pagination">
                 </div>
@@ -150,7 +150,7 @@
             </div>
             <div class="result-grade-p-table js_result-grade-p-table" data-menu-name="grade-p">
             </div>
-            <div class="result-graths js_result-graths" data-menu-name="grath">
+            <div class="result-graths js_result-graths active" data-menu-name="grath">
             </div>
         </div>
         <div class="errno-field js_errno-field max-width"></div>
