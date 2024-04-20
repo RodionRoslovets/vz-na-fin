@@ -103,3 +103,56 @@ export const filtersBtns = () => {
     });
   }
 };
+
+const addNumberName = (index) => {
+  const namesList = document.querySelector(".number-names-list");
+  const wrapper = document.createElement("div");
+  const input = document.createElement("input");
+  const span = document.createElement("span");
+
+  span.innerText = index + 1;
+  input.type = "text";
+
+  wrapper.classList.add("number-name");
+  input.classList.add("common__input");
+
+  wrapper.appendChild(span);
+  wrapper.appendChild(input);
+
+  namesList.appendChild(wrapper);
+};
+
+const removeLastChildsFromNames = (count) => {
+  const namesList = document.querySelector(".number-names-list");
+
+  for (let i = 0; i < count; i++) {
+    namesList.removeChild(namesList.lastElementChild);
+  }
+};
+
+export const numberNamesHandler = () => {
+  const input = document.querySelector("#number");
+  const namesWrapper = document.querySelector(".number-names");
+
+  if (input && namesWrapper) {
+    input.addEventListener("change", () => {
+      const value = +input.value;
+      const namesList = document.querySelector(".number-names-list");
+
+      if (value > 0 && namesList.children.length >= 0) {
+        namesWrapper.style.display = "block";
+
+        for (let i = namesList.children.length; i < value; i++) {
+          addNumberName(i);
+        }
+      } else {
+        namesList.innerHTML = "";
+        namesWrapper.style.display = "none";
+      }
+
+      if (value < namesList.children.length) {
+        removeLastChildsFromNames(namesList.children.length - value);
+      }
+    });
+  }
+};

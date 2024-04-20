@@ -15,7 +15,11 @@ import {
 
 import { setGradeValues } from "./partials/grade";
 
-import { filtersBtns, inputBtnsNumberControl } from "./partials/common";
+import {
+  filtersBtns,
+  inputBtnsNumberControl,
+  numberNamesHandler,
+} from "./partials/common";
 
 const settingsForm = document.querySelector(".js_parameters-form");
 
@@ -98,4 +102,5 @@ resultMenuButtons.forEach((element) => {
 window.addEventListener("DOMContentLoaded", () => {
   inputBtnsNumberControl();
   filtersBtns();
+  numberNamesHandler();
 });
