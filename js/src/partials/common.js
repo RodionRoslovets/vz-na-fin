@@ -1,3 +1,5 @@
+import { slideDown, slideUp } from "./slideUpAndDown";
+
 export const inputBtnsNumberControl = () => {
   const wrappers = document.querySelectorAll(".common__button-number-wrapper");
 
@@ -152,6 +154,24 @@ export const numberNamesHandler = () => {
 
       if (value < namesList.children.length) {
         removeLastChildsFromNames(namesList.children.length - value);
+      }
+    });
+  }
+};
+
+export const commonDescriptionMobile = () => {
+  const btn = document.querySelector(".common-text-btn");
+  const description = document.querySelector(".common-text-content");
+
+  if (description && btn) {
+    btn.addEventListener("click", () => {
+      console.log(123);
+      if (btn.classList.contains("common-text-btn--active")) {
+        btn.classList.remove("common-text-btn--active");
+        slideUp(description);
+      } else {
+        btn.classList.add("common-text-btn--active");
+        slideDown(description);
       }
     });
   }

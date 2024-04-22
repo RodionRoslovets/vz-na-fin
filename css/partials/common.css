@@ -238,6 +238,10 @@ body,
   outline: none;
 }
 
+.common-text-btn {
+  display: none;
+}
+
 @media (max-width:1200px) {
   .common-grid {
     display: grid;
@@ -268,6 +272,53 @@ body,
     border-right: none;
     left: auto;
     right: -0.375rem;
+  }
+
+  .common-text {
+    border: 1px solid var(--gray-e6);
+    border-radius: 0.625rem;
+  }
+
+  .common-text-btn {
+    padding: 0;
+    border: 0;
+    background: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    width: 100%;
+    padding: 0.625rem;
+  }
+
+  .common-text-btn svg {
+    width: 1.875rem;
+    height: auto;
+    display: block;
+    transition: transform 0.2s ease-out;
+  }
+
+  .common-text-btn--active svg {
+    transform: rotate(45deg);
+  }
+
+  .common-text-content {
+    display: none;
+    padding: 0.625rem 0 1.25rem;
+    margin: 0 0.625rem;
+    border-top: 1px solid var(--gray-e6);
+  }
+
+  .common-text-content p {
+    margin: 0;
+  }
+
+  .common-text-content p:first-child {
+    margin-top: 0.625rem;
+  }
+
+  .common-text-content p:not(:first-child) {
+    margin: 0.75rem 0 0;
   }
 }
 

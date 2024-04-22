@@ -16,6 +16,7 @@ import {
 import { setGradeValues } from "./partials/grade";
 
 import {
+  commonDescriptionMobile,
   filtersBtns,
   inputBtnsNumberControl,
   numberNamesHandler,
@@ -103,4 +104,5 @@ window.addEventListener("DOMContentLoaded", () => {
   inputBtnsNumberControl();
   filtersBtns();
   numberNamesHandler();
+  commonDescriptionMobile();
 });
