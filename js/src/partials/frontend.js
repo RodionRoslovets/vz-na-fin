@@ -4,6 +4,7 @@ import {grathDraw} from "./grathic";
 import {setNullResaultError} from "./errno";
 
 let resultTable,
+	resultGradeExist,
 	errnoField;
 
 let resultTablePageNumber,
@@ -55,7 +56,7 @@ function paginationItemEventListenerOnClick(event) {
 	resultTableOpenPage = paginationItem.value;
 
 	clear(errnoField, resultTable);
-	resultTableDraw();
+	resultTableDraw(resultGradeExist);
 }
 
 function resultTableDraw(gradeExist) {
@@ -92,7 +93,7 @@ function resultTableDraw(gradeExist) {
 		if (gradeExist) {
 			for (let i = 1; i <= gradeNumbers; i++) {
 				let parameters = i == 1 ? {style: `border-left: ${borderStyle};`} :  {};
-				addTableItem(headerRow, `Q<sub>${i}</sub>`, parameters);
+				addTableItem(headerRow, `O<sub>${i}</sub>`, parameters);
 			}
 		}
 		tableHeader.append(headerRow);
@@ -113,17 +114,20 @@ function resultTableDraw(gradeExist) {
 		});
 
 		// Добавление средних значений в конец таблицы:
-		const averageRow = document.createElement("tr");
-		averageRow.classList.add('parameters-table__row');
-		addTableItem(averageRow, "Среднее<br>значение");
-
-		const average = getAverage();
-		average.forEach((item, i) => {
-			let parameters = i == parametersNumber ? {style: `border-left: ${borderStyle};`} :  {};
-			addTableItem(averageRow, item, parameters);
-		});
-
-		tableBody.append(averageRow);
+		if (resultTableOpenPage == resultTablePageNumber) {
+			const averageRow = document.createElement("tr");
+			averageRow.classList.add('parameters-table__row');
+			addTableItem(averageRow, "Среднее<br>значение");
+	
+			const average = getAverage();
+			average.forEach((item, i) => {
+				let parameters = i == parametersNumber ? {style: `border-left: ${borderStyle};`} :  {};
+				addTableItem(averageRow, item, parameters);
+			});
+	
+			tableBody.append(averageRow);
+		}
+	
 		table.append(tableBody);
 
 		// Добавление пагинации
@@ -179,7 +183,7 @@ function addGradePDraw() {
 	
 		addTableItem(headerRow, `№`);
 		for (let i = 1; i <= resultMatrix.length; i++) {
-			addTableItem(headerRow, `Q<sub>${i}</sub>`);
+			addTableItem(headerRow, `O<sub>${i}</sub>`);
 		}
 		tableHeader.append(headerRow);
 		table.append(tableHeader);
@@ -188,7 +192,7 @@ function addGradePDraw() {
 		const tableBody = document.createElement("tbody");
 		resultMatrix.forEach((kit, num) => {
 			const row = document.createElement("tr");
-			addTableItem(row, `Q<sub>${num+1}</sub>`);
+			addTableItem(row, `O<sub>${num+1}</sub>`);
 			kit.forEach((item, i) => {
 				addTableItem(row, item);
 			});
@@ -206,7 +210,7 @@ function resultAdd(gradeExist) {
 		// Вывод таблицы
 		setResultTablePageNumber(getParametersKits());
 		resultTableOpenPage = 1;
-		resultTableDraw(gradeExist);
+		resultTableDraw(resultGradeExist = gradeExist);
 		document.querySelector('.js_result-block').classList.add('active');
 
 		// Таблица вероятности оценок
@@ -270,25 +274,25 @@ function createGradeInputTable(parametersNumber) {
 	const headerRow = document.createElement("tr");
 	headerRow.classList.add('parameters-grade-table__header-row');
 
+	const oldTable = document.querySelector(".js_parametrs-grade-input .js-parameters-grade-table-block table tbody");
+	let oldTableRowsNumber = oldTable ? oldTable.querySelectorAll("tr:last-child td").length : 2;
+
 	addGradeTableHeaderItem(headerRow, `№`);
-	for (let i = 1; i <= parametersNumber; i++) {
-		addGradeTableHeaderItem(headerRow, `X<sub>${i}</sub>`);
+	for (let i = 1; i < oldTableRowsNumber; i++) {
+		addGradeTableHeaderItem(headerRow, `O<sub>${i}</sub>`);
 	}
 	tableHeader.append(headerRow);
 	table.append(tableHeader);
 
 	// Наполнение таблицы
-	const oldTable = document.querySelector(".js_parametrs-grade-input .js-parameters-grade-table-block table tbody");
-	let oldTableRowsNumber = oldTable ? oldTable.querySelectorAll("tr").length : 1;
 	const tableBody = document.createElement("tbody");
-	oldTableRowsNumber++;
-	for (let n = 1; n < oldTableRowsNumber; n++) {
+	for (let n = 1; n <= parametersNumber; n++) {
 		const parametersRow = document.createElement("tr");
 		parametersRow.classList.add('parameters-grade-table__row');
 		parametersRow.classList.add('js_parameters-grade-table-row');
 
-		addGradeTableItem(parametersRow, n);
-		for(let i=0; i < parametersNumber; i++) {
+		addGradeTableItem(parametersRow, `X<sub>${n}</sub>`);
+		for(let i=1; i < oldTableRowsNumber; i++) {
 			addGradeTableItem(parametersRow);
 		}
 
@@ -302,24 +306,22 @@ function createGradeInputTable(parametersNumber) {
 
 function parametrsGradeInputRemoveKit(element) {
 	const gradeTable = element.closest(".js_parametrs-grade-input").querySelector(".js-parameters-grade-table-block");
-	const tableBody = gradeTable.querySelector("tbody");
-	const tableLastRows = tableBody.querySelectorAll("tr");
+	const tableLastRows = gradeTable.querySelectorAll("tr td:last-child");
 	if (tableLastRows.length > 1) {
-		tableBody.removeChild(tableLastRows[tableLastRows.length - 1]);
+		tableLastRows.forEach(element => element.parentNode.removeChild(element));
 	}
 }
 
 function parametrsGradeInputAddKit(element, parametersNumber) {
 	const gradeTable = element.closest(".js_parametrs-grade-input").querySelector(".js-parameters-grade-table-block");
+	const tableHead = gradeTable.querySelector("thead");
+	tableHead.querySelectorAll("tr").forEach((tableRow)=> {
+		addGradeTableHeaderItem(tableRow, `O<sub>${tableRow.querySelectorAll("td").length}</sub>`);
+	});
 	const tableBody = gradeTable.querySelector("tbody");
-	const parametersRow = document.createElement("tr");
-	parametersRow.classList.add('parameters-grade-table__row');
-	parametersRow.classList.add('js_parameters-grade-table-row');
-	addGradeTableItem(parametersRow, tableBody.querySelectorAll("tr").length + 1);
-	for(let i=0; i < parametersNumber; i++) {
-		addGradeTableItem(parametersRow);
-	}
-	tableBody.append(parametersRow);
+	tableBody.querySelectorAll("tr").forEach((tableRow)=> {
+		addGradeTableItem(tableRow);
+	});
 }
 
 function downloadButtonPrepare() {

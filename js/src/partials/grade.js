@@ -2,8 +2,39 @@ let gradeExist = true,
     gradeKitNumbers = 0;
 let gradeValues = [];
 
+function transposeArray(array, parametersNumber) {
+    // Проверяем, что входной параметр - это двумерный массив
+    if (!Array.isArray(array) || array.length === 0 || !Array.isArray(array[0])) {
+        throw new Error('Invalid input. Expected a 2D array.');
+    }
+
+    const numRows = array.length;
+    const numCols = array[0].length;
+
+    // Создаем новый массив для транспонированной матрицы
+    const transposedArray = [];
+
+    // Итерируем по колонкам и создаем строки для транспонированной матрицы
+    for (let col = 0; col < numCols; col++) {
+        const newRow = [];
+        // Итерируем по строкам и добавляем элементы из текущей колонки
+        for (let row = 0; row < numRows; row++) {
+            newRow.push(array[row][col]);
+        }
+        if (newRow.length != parametersNumber) {
+            gradeExist = false;
+            return
+        }
+
+        // Добавляем сформированную строку в транспонированный массив
+        transposedArray.push(newRow);
+    }
+
+    return transposedArray;
+}
+
 function setGradeValues(valuesTable, parametersNumber) {
-    let gradeKit;
+    let gradeKit, gradeKits = [];
     gradeExist = true;
     gradeValues = [];
     const valuesTableRows = valuesTable.querySelector(".js-parameters-grade-table-block").querySelectorAll(".js_parameters-grade-table-row");
@@ -22,12 +53,14 @@ function setGradeValues(valuesTable, parametersNumber) {
                 return gradeExist = false;
             };
         }
-        if (gradeKit.length != parametersNumber) return gradeExist = false;
-        gradeValues.push(gradeKit);
+
+        gradeKits.push(gradeKit);
     }
 
-    gradeKitNumbers = valuesTableRows.length;
-    return true;
+    gradeValues = transposeArray(gradeKits, parametersNumber);
+
+    gradeKitNumbers = gradeValues.length;
+    return gradeExist;
 }
 
 function isGradeExist() {

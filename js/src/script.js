@@ -17,6 +17,31 @@ settingsForm.addEventListener('submit', function(event) {
 	submitToGenerate(this, errorField, parametersTable);
 });
 
+function partialFactorial(n, k = 1) {
+    if (k > n) {
+        throw new Error('k должно быть меньше или равно n');
+    }
+
+    let result = 1;
+    for (let i = n; i > k; i--) {
+        result *= i;
+    }
+
+    return result;
+}
+
+function parametrsNumberKitsNumberGet() {
+	const paramNumber = document.querySelector(".js_parametrs-number-input").value;
+	const paramStep = document.querySelector(".js_parametrs-step-input").value;
+
+	if (paramNumber && paramStep) {
+		let k = 1/paramStep - 1;
+		let n = paramNumber - 1;
+
+		document.querySelector('.js_parametrs-kits-number').innerHTML = partialFactorial(k, k - n) / partialFactorial(n);
+	}
+}
+
 function parametrsNumberInputChangeEventListener(e) {
 	const gradeTable = createGradeInputTable(setParametersNumber(Number(e.target.value)));
 	settingsForm.querySelectorAll('.js-parameters-grade-table-block').forEach(function(element) {
@@ -25,9 +50,14 @@ function parametrsNumberInputChangeEventListener(e) {
 		if (table) table.parentNode.removeChild(table);
 		element.append(gradeTable);
 	});
+	parametrsNumberKitsNumberGet()
 }
 settingsForm.querySelectorAll('.js_parametrs-number-input').forEach(element => {
 	element.addEventListener('change', parametrsNumberInputChangeEventListener);
+})
+
+settingsForm.querySelectorAll('.js_parametrs-step-input').forEach(element => {
+	element.addEventListener('change', parametrsNumberKitsNumberGet);
 })
 
 

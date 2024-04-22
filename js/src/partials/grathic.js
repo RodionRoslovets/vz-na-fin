@@ -9,7 +9,10 @@ function grathDraw() {
         gradeNumbers = getGradeNumbers(),
         parametersNumber = getParametersNumber(),
         parameterKitSumm = getParameterKitSumm(),
-        parameterStep =  getParameterStep();
+        parameterStep =  getParameterStep(),
+        grathStep = 0.05;
+
+    grathStep = grathStep < parameterStep ? grathStep : parameterStep;
 
 
     const grathBlock = document.querySelector('.js_result-graths');
@@ -28,10 +31,12 @@ function grathDraw() {
         grathBlock.append(parametersGrathBlock);
         parametersGrathBlock.append(`Граффики значений наборов весовых коофициентов`);
 
-        valuesNumber = Math.round((parameterKitSumm/parameterStep) * 100) / 100;
+        valuesNumber = Math.round((parameterKitSumm/grathStep) * 100) / 100;
         values = new Array(valuesNumber).fill().map(function(item, i) {
-            return Math.round((parameterKitSumm - parameterStep*i) * 100) / 100;
+            return Math.round((parameterKitSumm - grathStep*i) * 100) / 100;
         });
+
+        values.sort((a, b) => a - b);
 
         labels = new Array(valuesNumber).fill().map(function(item, i) {
             return `${values[i]}`;
@@ -57,7 +62,7 @@ function grathDraw() {
                         y: {
                         beginAtZero: true
                         }
-                    }
+                    },
                 }
             });
         });
@@ -79,6 +84,8 @@ function grathDraw() {
                     }
                 });
                 valuesNumber = values.length;
+
+                values.sort((a, b) => a - b);
 
                 labels = new Array(valuesNumber).fill().map(function(item, i) {
                     return `${values[i]}`;
@@ -104,7 +111,7 @@ function grathDraw() {
                             y: {
                             beginAtZero: true
                             }
-                        }
+                        },
                     }
                 });
             }

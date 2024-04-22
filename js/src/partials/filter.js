@@ -10,6 +10,8 @@ function getOperationcode(operation) {
     		return 3;
 		case '<=':
 			return 4;
+		case '=':
+			return 5;
 		default:
 			return -1;
 	}
@@ -53,6 +55,8 @@ function operationСomparison(operationFirstParameters, operation, operationSeco
     		return operationFirstParameters >= operationSecondParameters;
 		case 4:
 			return operationFirstParameters <= operationSecondParameters;
+		case 5:
+			return operationFirstParameters == operationSecondParameters;
 	}
 }
 
