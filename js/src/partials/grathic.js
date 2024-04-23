@@ -67,6 +67,34 @@ function grathDraw() {
             });
         });
 
+        labels = new Array(parametersNumber).fill().map(function(item, i) {
+            return `p${i + 1}`;
+        });
+
+        let parametersGrath = document.createElement("canvas");
+        parametersGrathBlock.append(parametersGrath);
+        
+        datasets = new Chart (parametersGrath, {
+                type: 'bar',
+                data: {
+                labels: labels,
+                datasets: [{
+                    type: 'bar',
+                    label: `Соотношение максимальных и минимальных значений коофициентов в наборах`,
+                    data: labels.map(function(item, k) {
+                        return [Math.max(...parametersKits.map(innerArray => innerArray[k])), Math.min(...parametersKits.map(innerArray => innerArray[k]))];
+                    }),
+                }],
+                },
+                options: {
+                    scales: {
+                        y: {
+                        beginAtZero: true
+                        }
+                    },
+                }
+        });
+
         // grades grathic
         if (isGradeExist() && gradeNumbers > 1 && gradeNumbers < 64) {
             grathBlock.append(gradesGrathBlock);
@@ -115,6 +143,34 @@ function grathDraw() {
                     }
                 });
             }
+            
+            labels = new Array(gradeNumbers).fill().map(function(item, i) {
+                return `Q${i+1}`;
+            });
+    
+            const gradesGrath = document.createElement("canvas");
+            gradesGrathBlock.append(gradesGrath);
+            
+            new Chart (gradesGrath, {
+                    type: 'bar',
+                    data: {
+                    labels: labels,
+                    datasets: [{
+                        type: 'bar',
+                        label: `Соотношение максимальных и минимальных значений оценок в наборах`,
+                        data: labels.map(function(item, k) {
+                            return [Math.max(...parametersKits.map(innerArray => innerArray[parametersNumber + k])), Math.min(...parametersKits.map(innerArray => innerArray[parametersNumber + k]))];
+                        }),
+                    }],
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                            beginAtZero: true
+                            }
+                        },
+                    }
+            });
         }
     }
 }

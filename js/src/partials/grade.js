@@ -33,6 +33,23 @@ function transposeArray(array, parametersNumber) {
     return transposedArray;
 }
 
+function divideElementsByMax(array) {
+    // Проходим по каждому одномерному массиву в двумерном массиве
+    for (let i = 0; i < array.length; i++) {
+        const subArray = array[i];
+        
+        // Находим наибольший элемент в текущем одномерном массиве
+        const maxElement = Math.max(...subArray);
+
+        // Перебираем элементы текущего одномерного массива и делим их на maxElement
+        for (let j = 0; j < subArray.length; j++) {
+            subArray[j] /= maxElement;
+        }
+    }
+
+    return array;
+}
+
 function setGradeValues(valuesTable, parametersNumber) {
     let gradeKit, gradeKits = [];
     gradeExist = true;
@@ -57,7 +74,8 @@ function setGradeValues(valuesTable, parametersNumber) {
         gradeKits.push(gradeKit);
     }
 
-    gradeValues = transposeArray(gradeKits, parametersNumber);
+    gradeValues = divideElementsByMax(transposeArray(gradeKits, parametersNumber));
+
 
     gradeKitNumbers = gradeValues.length;
     return gradeExist;

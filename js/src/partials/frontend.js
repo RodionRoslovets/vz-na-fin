@@ -205,6 +205,13 @@ function addGradePDraw() {
 	}
 };
 
+function setResultNumber() {
+	const numberKits = getParametersKits().length;
+	document.querySelectorAll('.js_parametrs-kits-end-number').forEach((element) => {
+		element.innerHTML = numberKits ? numberKits : '-';
+	});
+}
+
 function resultAdd(gradeExist) {
 	if (getParametersKits().length) {
 		// Вывод таблицы
@@ -224,6 +231,7 @@ function resultAdd(gradeExist) {
 	} else {
 		setNullResaultError();
 	}
+	setResultNumber();
 }
 
 function generateBegin() {
@@ -334,13 +342,13 @@ function downloadButtonPrepare() {
 	// anchor.download = 'data.json';
 
 	// Dounload csv | Need
-	let data = getParametersKits();
+	let data = [...getParametersKits()];
 	let dataHeader = new Array(data[0].length).fill().map(function(item, i) {
         if (i < getParametersNumber()) {
 			return `p${i + 1}`;
 		}
 		if (i < getParametersNumber() + getGradeNumbers()) {
-			return `Q${i + 1 - getParametersNumber()}`;
+			return `O${i + 1 - getParametersNumber()}`;
 		}
 		return `undefined`;
     });
