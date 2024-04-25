@@ -162,9 +162,18 @@ export const numberNamesHandler = () => {
 export const commonDescriptionMobile = () => {
   const btn = document.querySelector(".common-text-btn");
   const description = document.querySelector(".common-text-content");
+  let windowWidth = window.innerWidth;
 
-  if (description && btn && window.innerWidth <= 890) {
+  window.addEventListener("resize", () => {
+    windowWidth = window.innerWidth;
+
+    description.style.display = windowWidth > 890 ? "block" : "none";
+  });
+
+  if (description && btn) {
     btn.addEventListener("click", () => {
+      if (windowWidth > 890) return;
+
       if (btn.classList.contains("common-text-btn--active")) {
         btn.classList.remove("common-text-btn--active");
         slideUp(description);
