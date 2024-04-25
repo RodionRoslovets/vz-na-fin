@@ -47,7 +47,7 @@ const addFiltersBlock = () => {
   COMPARE_VALS.forEach((val, index) => {
     const opt = document.createElement("option");
     opt.value = val;
-    opt.innerHTML = val;
+    opt.innerHTML = val === ">=" ? "&#8805;" : val === "<=" ? "&#8804;" : val;
 
     if (index === 0) {
       opt.selected = true;
@@ -163,9 +163,8 @@ export const commonDescriptionMobile = () => {
   const btn = document.querySelector(".common-text-btn");
   const description = document.querySelector(".common-text-content");
 
-  if (description && btn) {
+  if (description && btn && window.innerWidth <= 890) {
     btn.addEventListener("click", () => {
-      console.log(123);
       if (btn.classList.contains("common-text-btn--active")) {
         btn.classList.remove("common-text-btn--active");
         slideUp(description);
