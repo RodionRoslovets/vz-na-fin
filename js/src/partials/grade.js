@@ -74,7 +74,7 @@ function setGradeValues(valuesTable, parametersNumber) {
         gradeKits.push(gradeKit);
     }
 
-    gradeValues = divideElementsByMax(transposeArray(gradeKits, parametersNumber));
+    gradeValues = transposeArray(divideElementsByMax(gradeKits), parametersNumber);
 
 
     gradeKitNumbers = gradeValues.length;
