@@ -14,22 +14,12 @@
 
 .parametrs-grade-input__number-control {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
-    height: 100%;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    background: #fff;
+    gap: 0.3125rem;
 }
 
-.parametrs-grade-input__number-control div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 20px;
-    height: 20px;
-    border: 1px solid gray;
-    margin: 5px;
+.parametrs-grade-input__number-control button {
+    width: 2.5rem;
+    border-radius: 50%;
+    border: 1px solid var(--gray-e6);
 }
