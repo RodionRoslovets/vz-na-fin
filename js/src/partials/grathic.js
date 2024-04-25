@@ -89,7 +89,9 @@ function grathDraw() {
                 options: {
                     scales: {
                         y: {
-                        beginAtZero: true
+                            min: 0,
+                            max: parameterKitSumm,
+                            beginAtZero: true,
                         }
                     },
                 }
@@ -99,26 +101,19 @@ function grathDraw() {
         if (isGradeExist() && gradeNumbers > 1 && gradeNumbers < 64) {
             grathBlock.append(gradesGrathBlock);
             gradesGrathBlock.append(`Граффики изменения рейтинговых оценок`);
+
+            valuesNumber = Math.round((parameterKitSumm/grathStep) * 100) / 100;
+            values = new Array(valuesNumber).fill().map(function(item, i) {
+                return Math.round((parameterKitSumm - grathStep*i) * 100) / 100;
+            });
+
+            values.sort((a, b) => a - b);
+
+            labels = new Array(valuesNumber).fill().map(function(item, i) {
+                return `${values[i]}`;
+            });
             
             for (let i = 0; gradeNumbers > i; i++) {
-                let values = Array();
-                let kit = parametersKits.map((kit,k)=>{
-                    let num = parametersNumber+i;
-                    return kit[num];
-                });
-                kit.forEach((element) => {
-                    if (!values.includes(element)) {
-                        values.push(element);
-                    }
-                });
-                valuesNumber = values.length;
-
-                values.sort((a, b) => a - b);
-
-                labels = new Array(valuesNumber).fill().map(function(item, i) {
-                    return `${values[i]}`;
-                });
-
                 const gradesGrath = document.createElement("canvas");
                 gradesGrathBlock.append(gradesGrath);
                 new Chart (gradesGrath, {
@@ -129,7 +124,7 @@ function grathDraw() {
                         label: `Оценка Q${i + 1}`,
                         data: new Array(values.length).fill().map(function(item, k) {
                             return parametersKits.reduce(function(currentSum, currentKit) {
-                                return currentKit[parametersNumber + i] == values[k] ? ++currentSum : currentSum;
+                                return currentKit[parametersNumber + i] <= values[k] && currentKit[parametersNumber + i] > values[k] - grathStep  ? ++currentSum : currentSum;
                             }, 0);
                         }),
                     }],
@@ -138,7 +133,7 @@ function grathDraw() {
                         scales: {
                             y: {
                             beginAtZero: true
-                            }
+                            },
                         },
                     }
                 });
@@ -166,7 +161,9 @@ function grathDraw() {
                     options: {
                         scales: {
                             y: {
-                            beginAtZero: true
+                                min: 0,
+                                max: parameterKitSumm,
+                                beginAtZero: true
                             }
                         },
                     }
