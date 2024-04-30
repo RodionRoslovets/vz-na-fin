@@ -34,7 +34,7 @@ export const inputBtnsNumberControl = () => {
   }
 };
 
-const COMPARE_VALS = [">", "<", ">=", "<="];
+const COMPARE_VALS = [">", "<", ">=", "<=", "="];
 
 const addFiltersBlock = () => {
   const filtersBlock = document.querySelector(".common__filters__block");
