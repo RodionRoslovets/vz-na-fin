@@ -9,8 +9,7 @@
     border-collapse: collapse;
 }
 
-.parameters-table tr {
-}
+.parameters-table tr {}
 
 .parameters-table tbody tr {
     border-bottom: 1px solid #fff;
@@ -24,8 +23,12 @@
     background: whitesmoke;
 }
 
-.parameters-table td:nth-child(1) {
-    background: rgb(226, 255, 173);
+.parameters-table tbody tr:nth-child(even) td {
+    background: var(--gray-d9);
+}
+
+.parameters-table tbody tr:nth-child(odd) td {
+    background: var(--gray-ec);
 }
 
 .parameters-table thead td {
@@ -38,6 +41,9 @@
     background: none;
 }
 
-.parameters-table thead tr:nth-child(1) td:nth-child(1) {
-    background: rgb(226, 255, 173);
+/* .parameters-table thead tr:nth-child(1) td:nth-child(1) {
+    background: var(--gray-e6);
+} */
+.parameters-table thead tr td {
+    background: var(--pink-ff) !important;
 }

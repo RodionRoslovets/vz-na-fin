@@ -63,6 +63,8 @@ function paginationItemEventListenerOnClick(event) {
 
 function resultTableDraw(gradeExist) {
   const parametersKitsArray = getParametersKitsOnThisPage();
+  const parametersNames = document.querySelectorAll(".number-names-list input");
+
   if (parametersKitsArray.length > 0) {
     const table = document.createElement("table");
     resultTable.append(table);
@@ -92,9 +94,14 @@ function resultTableDraw(gradeExist) {
     }
     tableHeader.append(headerRow);
     headerRow = document.createElement("tr");
-
+    console.log(parametersNames);
     for (let i = 1; i <= parametersNumber; i++) {
-      addTableItem(headerRow, `p<sub>${i}</sub>`);
+      addTableItem(
+        headerRow,
+        parametersNames[i - 1].value
+          ? parametersNames[i - 1].value
+          : `p<sub>${i}</sub>`
+      );
     }
     if (gradeExist) {
       for (let i = 1; i <= gradeNumbers; i++) {
