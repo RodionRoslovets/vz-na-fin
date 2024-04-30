@@ -36,6 +36,7 @@ function setFiltersToField() {
 
       if (!filtLeft.trim() || !filtRight.trim() || !filtSelect) {
         breakCycle = true;
+        return;
       }
 
       const filterLeftFinal = filtLeft
