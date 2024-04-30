@@ -199,10 +199,12 @@ body,
   height: 2.5rem;
 }
 
-.number-names {
+.number-names,
+.objects-names {
   display: none;
 }
 
+.objects-name,
 .number-name {
   border: 1px solid var(--gray-e6);
   border-radius: 0.625rem;
@@ -211,11 +213,13 @@ body,
   align-items: center;
 }
 
+.objects-name .common__input,
 .number-name .common__input {
   width: 100%;
   text-align: left;
 }
 
+.objects-name:not(:first-child),
 .number-name:not(:first-child) {
   margin-top: 0.75rem;
 }

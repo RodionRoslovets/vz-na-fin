@@ -124,6 +124,32 @@ const addNumberName = (index) => {
   namesList.appendChild(wrapper);
 };
 
+export const addObjectName = (index) => {
+  const namesList = document.querySelector(".objects-names-list");
+  const wrapper = document.createElement("div");
+  const input = document.createElement("input");
+  const span = document.createElement("span");
+
+  span.innerText = index + 1;
+  input.type = "text";
+
+  wrapper.classList.add("objects-name");
+  input.classList.add("common__input");
+
+  wrapper.appendChild(span);
+  wrapper.appendChild(input);
+
+  namesList.appendChild(wrapper);
+
+  namesList.parentElement.style.display = "block";
+};
+
+const removeLastChildsFromObjectNames = (count) => {
+  const namesList = document.querySelector(".objects-names-list");
+
+  namesList.removeChild(namesList.lastElementChild);
+};
+
 const removeLastChildsFromNames = (count) => {
   const namesList = document.querySelector(".number-names-list");
 
@@ -181,6 +207,25 @@ export const commonDescriptionMobile = () => {
         btn.classList.add("common-text-btn--active");
         slideDown(description);
       }
+    });
+  }
+};
+
+export const objectsNamesBtnsHandler = () => {
+  const addBtn = document.querySelector(".objects-add");
+  const removeBtn = document.querySelector(".objects-remove");
+
+  if (addBtn && removeBtn) {
+    addBtn.addEventListener("click", () => {
+      const objectsNamesList = document.querySelector(".objects-names-list");
+
+      addObjectName(objectsNamesList.children.length);
+    });
+
+    removeBtn.addEventListener("click", () => {
+      const objectsNamesList = document.querySelector(".objects-names-list");
+
+      removeLastChildsFromObjectNames(objectsNamesList.children.length);
     });
   }
 };

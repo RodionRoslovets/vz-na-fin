@@ -2,6 +2,7 @@ import { getParametersNumber, getParametersKits, getAverage } from "./generate";
 import { getGradeNumbers } from "./grade";
 import { grathDraw } from "./grathic";
 import { setNullResaultError } from "./errno";
+import { addObjectName } from "./common";
 
 let resultTable, resultGradeExist, errnoField;
 
@@ -64,6 +65,7 @@ function paginationItemEventListenerOnClick(event) {
 function resultTableDraw(gradeExist) {
   const parametersKitsArray = getParametersKitsOnThisPage();
   const parametersNames = document.querySelectorAll(".number-names-list input");
+  const objectsNames = document.querySelectorAll(".objects-names-list input");
 
   if (parametersKitsArray.length > 0) {
     const table = document.createElement("table");
@@ -107,7 +109,13 @@ function resultTableDraw(gradeExist) {
       for (let i = 1; i <= gradeNumbers; i++) {
         let parameters =
           i == 1 ? { style: `border-left: ${borderStyle};` } : {};
-        addTableItem(headerRow, `O<sub>${i}</sub>`, parameters);
+        addTableItem(
+          headerRow,
+          objectsNames[i - 1].value
+            ? objectsNames[i - 1].value
+            : `O<sub>${i}</sub>`,
+          parameters
+        );
       }
     }
     tableHeader.append(headerRow);
@@ -342,9 +350,16 @@ function addGradePDraw() {
     const tableHeader = document.createElement("thead");
     const headerRow = document.createElement("tr");
 
+    const objectsNames = document.querySelectorAll(".objects-names-list input");
+
     addTableItem(headerRow, `№`);
     for (let i = 1; i <= resultMatrix.length; i++) {
-      addTableItem(headerRow, `O<sub>${i}</sub>`);
+      addTableItem(
+        headerRow,
+        objectsNames[i - 1].value
+          ? objectsNames[i - 1].value
+          : `O<sub>${i}</sub>`
+      );
     }
     tableHeader.append(headerRow);
     table.append(tableHeader);
@@ -353,7 +368,12 @@ function addGradePDraw() {
     const tableBody = document.createElement("tbody");
     resultMatrix.forEach((kit, num) => {
       const row = document.createElement("tr");
-      addTableItem(row, `O<sub>${num + 1}</sub>`);
+      addTableItem(
+        row,
+        objectsNames[num].value
+          ? objectsNames[num].value
+          : `O<sub>${num + 1}</sub>`
+      );
       kit.forEach((item, i) => {
         addTableItem(row, item);
       });
@@ -475,6 +495,10 @@ function createGradeInputTable(parametersNumber) {
   }
 
   table.append(tableBody);
+
+  const objectsNamesList = document.querySelector(".objects-names-list");
+
+  if (objectsNamesList.children.length === 0) addObjectName(0);
 
   return table;
 }

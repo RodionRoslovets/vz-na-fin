@@ -20,6 +20,7 @@ import {
   filtersBtns,
   inputBtnsNumberControl,
   numberNamesHandler,
+  objectsNamesBtnsHandler,
 } from "./partials/common";
 
 const changeLoaderState = async () => {
@@ -154,4 +155,5 @@ window.addEventListener("DOMContentLoaded", () => {
   filtersBtns();
   numberNamesHandler();
   commonDescriptionMobile();
+  objectsNamesBtnsHandler();
 });
