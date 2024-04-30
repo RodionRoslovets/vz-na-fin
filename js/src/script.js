@@ -22,15 +22,31 @@ import {
   numberNamesHandler,
 } from "./partials/common";
 
+const changeLoaderState = async () => {
+  const btn = document.querySelector(".submit");
+
+  if (btn) {
+    if (btn.classList.contains("submit--active")) {
+      btn.classList.remove("submit--active");
+    } else {
+      btn.classList.add("submit--active");
+    }
+  }
+};
+
 const settingsForm = document.querySelector(".js_parameters-form");
 
 const parametersTable = document.querySelector(".js_parameters-table");
 const errorField = document.querySelector(".js_errno-field");
 
-settingsForm.addEventListener("submit", function (event) {
+settingsForm.addEventListener("submit", async function (event) {
   event.preventDefault();
 
-  submitToGenerate(this, errorField, parametersTable);
+  changeLoaderState();
+  setTimeout(() => {
+    submitToGenerate(this, errorField, parametersTable);
+    changeLoaderState();
+  }, 1000);
 });
 
 function partialFactorial(n, k = 1) {

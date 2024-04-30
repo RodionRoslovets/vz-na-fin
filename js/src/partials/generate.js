@@ -220,7 +220,7 @@ function parametersKitsArrayGenerate() {
   parametersKitsArrayGenerateAfter();
 }
 
-function submitToGenerate(settingsForm, errorField, parametersTable) {
+async function submitToGenerate(settingsForm, errorField, parametersTable) {
   frontend.clear(errorField, parametersTable);
   frontend.setResultTable(parametersTable);
   frontend.setErrorField(errorField);

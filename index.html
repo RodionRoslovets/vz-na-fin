@@ -11,6 +11,8 @@
         <form class="parameters-form js_parameters-form">
             <div class="common-grid">
                 <div class="common-index">
+                    <br><div>Общее количество наборов: <span class="js_parametrs-kits-number">-</span></div>
+            <br><div>Число допустимых наборов: <span class="js_parametrs-kits-end-number">-</span></div>
                     <div class="tooltip-outer">
                         <label for="number">Показатели</label>
                         <div class="tooltip-wrapper">
@@ -154,7 +156,14 @@
                     </div>
                 </div>
             </div>
-            <input type="submit" class="js_parametrs-form-submit" value="Рассчитать">
+            <button type="submit" class="js_parametrs-form-submit submit">
+                <span>Рассчитать</span>
+                <div class="loader">
+                    <div class="loader-bar"></div>
+                    <div class="loader-bar"></div>
+                    <div class="loader-bar"></div>
+                </div>
+            </button>
         </form>
         <div class="result-block js_result-block">
             <div class="result-menu js_result-menu">

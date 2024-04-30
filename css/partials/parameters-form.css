@@ -5,7 +5,7 @@
   background: none;
 }
 
-.parameters-form input[type="submit"] {
+.parameters-form .submit {
   width: 12.5rem;
   background: var(--gray-d9);
   padding: 12px;
@@ -14,10 +14,23 @@
   border: none;
   cursor: pointer;
   align-self: flex-start;
+  height: 42px;
 }
 
-.parameters-form input[type="submit"]:hover {
+.parameters-form .submit .loader {
+  display: none;
+}
+
+.parameters-form .submit:hover {
   background: var(--gray-e6);
+}
+
+.parameters-form .submit.submit--active .loader {
+  display: flex;
+}
+
+.parameters-form .submit.submit--active span {
+  display: none;
 }
 
 /* .parameters-form > div {
