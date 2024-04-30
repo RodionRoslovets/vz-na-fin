@@ -3,6 +3,8 @@ import { getGradeNumbers } from "./grade";
 import { grathDraw } from "./grathic";
 import { setNullResaultError } from "./errno";
 import { addObjectName } from "./common";
+import * as FileSaver from "file-saver";
+import XLSX from "sheetjs-style";
 
 let resultTable, resultGradeExist, errnoField;
 
@@ -96,7 +98,7 @@ function resultTableDraw(gradeExist) {
     }
     tableHeader.append(headerRow);
     headerRow = document.createElement("tr");
-    console.log(parametersNames);
+
     for (let i = 1; i <= parametersNumber; i++) {
       addTableItem(
         headerRow,
@@ -409,8 +411,9 @@ function resultAdd(gradeExist) {
     //Вывод графиков
     grathDraw();
 
-    // Подготовка фала на скачивание
-    downloadButtonPrepare();
+    // Подготовка файла на скачивание
+    // downloadButtonPrepare();
+    downloadHandler();
   } else {
     setNullResaultError();
   }
@@ -560,6 +563,78 @@ function downloadButtonPrepare() {
   anchor.download = "data.csv";
 }
 
+const exportStat = async () => {
+  const results = [...getParametersKits()];
+  const fileType =
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+  const extention = ".xlsx";
+  const numNames = document.querySelectorAll(".number-names-list input");
+  const objNames = document.querySelectorAll(".objects-names-list input");
+  const btn = document.querySelector(".js_result-download");
+
+  btn.classList.add("js_result-download--active");
+
+  setTimeout(() => {
+    try {
+      const date = new Date();
+      const name = `DINAMO_EXPORT_${date.getDate()}-${
+        date.getMonth() + 1
+      }-${date.getFullYear()}__${date.getHours()}-${date.getMinutes()}`;
+
+      let keys = [];
+
+      numNames?.forEach((item, index) => {
+        if (item.value) {
+          keys.push(item.value);
+        } else {
+          keys.push(`P${index + 1}`);
+        }
+      });
+      objNames?.forEach((item, index) => {
+        if (item.value) {
+          keys.push(item.value);
+        } else {
+          keys.push(`O${index + 1}`);
+        }
+      });
+
+      if (keys.length !== results[0].length) {
+        keys = keys.slice(0, results[0].length);
+      }
+
+      const exportData = results.map((item) => {
+        const obj = {};
+        keys.forEach((key, index) => {
+          obj[key] = item[index];
+        });
+
+        return obj;
+      });
+
+      const ws = XLSX.utils.json_to_sheet(exportData);
+      const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+      const exelBuffer = XLSX.write(wb, {
+        bookType: "xlsx",
+        type: "array",
+      });
+      const fileData = new Blob([exelBuffer], { type: fileType });
+      FileSaver.saveAs(fileData, name + extention);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      btn.classList.remove("js_result-download--active");
+    }
+  }, 1000);
+};
+
+const downloadHandler = () => {
+  const btn = document.querySelector(".js_result-download");
+
+  if (btn) {
+    btn.addEventListener("click", exportStat);
+  }
+};
+
 export {
   clear,
   resultAdd,
@@ -570,4 +645,5 @@ export {
   createGradeInputTable,
   parametrsGradeInputRemoveKit,
   parametrsGradeInputAddKit,
+  downloadHandler,
 };

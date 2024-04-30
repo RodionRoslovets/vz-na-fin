@@ -179,7 +179,14 @@
                 <button class="result-menu__button js_result-menu-button active" data-menu-name="grath">Графики</button>
                 <button class="result-menu__button js_result-menu-button " data-menu-name="table">Таблица</button>
                 <button class="result-menu__button js_result-menu-button" data-menu-name="grade-p">Таблица стахастического доминирования оценок</button>
-                <a class="result-menu__button js_result-download" data-menu-name="download">Скачать вычесленный массив</a>
+                <button type="button" class="result-menu__button js_result-download" data-menu-name="download">
+                    <span>Экспорт таблицы</span>
+                    <div class="loader">
+                        <div class="loader-bar"></div>
+                        <div class="loader-bar"></div>
+                        <div class="loader-bar"></div>
+                    </div>
+                </button>
             </div>
             <div class="result-table " data-menu-name="table">
                 <div class="parameters-table js_parameters-table"></div>

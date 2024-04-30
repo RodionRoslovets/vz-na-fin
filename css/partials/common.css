@@ -289,6 +289,20 @@ body,
   animation-name: bar3;
 }
 
+.js_result-download .loader {
+  display: none;
+}
+
+.js_result-download.js_result-download--active .loader {
+  display: flex;
+}
+
+.js_result-download.js_result-download--active span {
+  display: none;
+}
+
+
+
 
 @keyframes bar1 {
   0% {
