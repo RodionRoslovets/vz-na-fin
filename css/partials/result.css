@@ -13,15 +13,34 @@
  .result-table__pagination {
      display: flex;
      flex-flow: row nowrap;
-
+     gap: 10px;
      height: 50px;
      overflow: auto;
      margin: 15px;
  }
 
  .result-table__pagination button {
-     margin: 3px 10px;
+     border-radius: 0.625rem;
+     padding: 0.25rem;
+     background: var(--gray-d9);
+     height: 2rem;
+     cursor: pointer;
+     border: none;
+     transition: background 0.2s ease-out;
  }
+
+ .result-table__pagination-dots {
+     height: 2rem;
+     display: flex;
+     align-items: flex-end;
+ }
+
+
+ .result-table__pagination button:hover,
+ .result-table__pagination button.open {
+     background: var(--gray-e6);
+ }
+
 
  .result-table__pagination-info {}
 
