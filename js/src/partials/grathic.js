@@ -9,7 +9,10 @@ function grathDraw() {
         gradeNumbers = getGradeNumbers(),
         parametersNumber = getParametersNumber(),
         parameterKitSumm = getParameterKitSumm(),
-        parameterStep =  getParameterStep();
+        parameterStep =  getParameterStep(),
+        grathStep = 0.05;
+
+    grathStep = grathStep < parameterStep ? grathStep : parameterStep;
 
 
     const grathBlock = document.querySelector('.js_result-graths');
@@ -28,10 +31,12 @@ function grathDraw() {
         grathBlock.append(parametersGrathBlock);
         parametersGrathBlock.append(`Граффики значений наборов весовых коофициентов`);
 
-        valuesNumber = Math.round((parameterKitSumm/parameterStep) * 100) / 100;
+        valuesNumber = Math.round((parameterKitSumm/grathStep) * 100) / 100;
         values = new Array(valuesNumber).fill().map(function(item, i) {
-            return Math.round((parameterKitSumm - parameterStep*i) * 100) / 100;
+            return Math.round((parameterKitSumm - grathStep*i) * 100) / 100;
         });
+
+        values.sort((a, b) => a - b);
 
         labels = new Array(valuesNumber).fill().map(function(item, i) {
             return `${values[i]}`;
@@ -57,33 +62,58 @@ function grathDraw() {
                         y: {
                         beginAtZero: true
                         }
-                    }
+                    },
                 }
             });
+        });
+
+        labels = new Array(parametersNumber).fill().map(function(item, i) {
+            return `p${i + 1}`;
+        });
+
+        let parametersGrath = document.createElement("canvas");
+        parametersGrathBlock.append(parametersGrath);
+        
+        datasets = new Chart (parametersGrath, {
+                type: 'bar',
+                data: {
+                labels: labels,
+                datasets: [{
+                    type: 'bar',
+                    label: `Соотношение максимальных и минимальных значений коофициентов в наборах`,
+                    data: labels.map(function(item, k) {
+                        return [Math.max(...parametersKits.map(innerArray => innerArray[k])), Math.min(...parametersKits.map(innerArray => innerArray[k]))];
+                    }),
+                }],
+                },
+                options: {
+                    scales: {
+                        y: {
+                            min: 0,
+                            max: parameterKitSumm,
+                            beginAtZero: true,
+                        }
+                    },
+                }
         });
 
         // grades grathic
         if (isGradeExist() && gradeNumbers > 1 && gradeNumbers < 64) {
             grathBlock.append(gradesGrathBlock);
-            gradesGrathBlock.append(`Граффики изменения значений оценок весовых коофициентов`);
+            gradesGrathBlock.append(`Граффики изменения рейтинговых оценок`);
+
+            valuesNumber = Math.round((parameterKitSumm/grathStep) * 100) / 100;
+            values = new Array(valuesNumber).fill().map(function(item, i) {
+                return Math.round((parameterKitSumm - grathStep*i) * 100) / 100;
+            });
+
+            values.sort((a, b) => a - b);
+
+            labels = new Array(valuesNumber).fill().map(function(item, i) {
+                return `${values[i]}`;
+            });
             
             for (let i = 0; gradeNumbers > i; i++) {
-                let values = Array();
-                let kit = parametersKits.map((kit,k)=>{
-                    let num = parametersNumber+i;
-                    return kit[num];
-                });
-                kit.forEach((element) => {
-                    if (!values.includes(element)) {
-                        values.push(element);
-                    }
-                });
-                valuesNumber = values.length;
-
-                labels = new Array(valuesNumber).fill().map(function(item, i) {
-                    return `${values[i]}`;
-                });
-
                 const gradesGrath = document.createElement("canvas");
                 gradesGrathBlock.append(gradesGrath);
                 new Chart (gradesGrath, {
@@ -91,10 +121,10 @@ function grathDraw() {
                     labels: labels,
                     datasets: [{
                         type: 'bar',
-                        label: `Оценка q${i + 1}`,
+                        label: `Оценка Q${i + 1}`,
                         data: new Array(values.length).fill().map(function(item, k) {
                             return parametersKits.reduce(function(currentSum, currentKit) {
-                                return currentKit[parametersNumber + i] == values[k] ? ++currentSum : currentSum;
+                                return currentKit[parametersNumber + i] <= values[k] && currentKit[parametersNumber + i] > values[k] - grathStep  ? ++currentSum : currentSum;
                             }, 0);
                         }),
                     }],
@@ -103,11 +133,41 @@ function grathDraw() {
                         scales: {
                             y: {
                             beginAtZero: true
-                            }
-                        }
+                            },
+                        },
                     }
                 });
             }
+            
+            labels = new Array(gradeNumbers).fill().map(function(item, i) {
+                return `Q${i+1}`;
+            });
+    
+            const gradesGrath = document.createElement("canvas");
+            gradesGrathBlock.append(gradesGrath);
+            
+            new Chart (gradesGrath, {
+                    type: 'bar',
+                    data: {
+                    labels: labels,
+                    datasets: [{
+                        type: 'bar',
+                        label: `Соотношение максимальных и минимальных значений оценок в наборах`,
+                        data: labels.map(function(item, k) {
+                            return [Math.max(...parametersKits.map(innerArray => innerArray[parametersNumber + k])), Math.min(...parametersKits.map(innerArray => innerArray[parametersNumber + k]))];
+                        }),
+                    }],
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                min: 0,
+                                max: parameterKitSumm,
+                                beginAtZero: true
+                            }
+                        },
+                    }
+            });
         }
     }
 }

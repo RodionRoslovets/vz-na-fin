@@ -10,45 +10,10 @@ function getOperationcode(operation) {
       return 3;
     case "<=":
       return 4;
+    case "=":
+      return 5;
     default:
       return -1;
-  }
-}
-
-function setFiltersToField() {
-  const blocks = document.querySelectorAll(".common__parameters-block");
-  const input = document.querySelector("#filter");
-  let breakCycle = false;
-
-  if (blocks.length > 0 && input) {
-    const filters = Array.from(blocks).map((block) => {
-      if (breakCycle) return;
-
-      const filtLeft = block.querySelector(
-        ".common__input--condition--left"
-      ).value;
-      const filtRight = block.querySelector(
-        ".common__input--condition--right"
-      ).value;
-      const filtSelect = block.querySelector(".common__select").value;
-
-      if (!filtLeft.trim() || !filtRight.trim() || !filtSelect) {
-        breakCycle = true;
-      }
-
-      const filterLeftFinal = filtLeft
-        .split("")
-        .filter((sym) => sym !== " ")
-        .join("");
-      const filterRightFinal = filtRight
-        .split("")
-        .filter((sym) => sym !== " ")
-        .join("");
-
-      return `${filterLeftFinal.trim()} ${filtSelect} ${filterRightFinal.trim()}`;
-    });
-
-    input.value = filters.join(", ");
   }
 }
 
@@ -98,6 +63,8 @@ function operationСomparison(
       return operationFirstParameters >= operationSecondParameters;
     case 4:
       return operationFirstParameters <= operationSecondParameters;
+    case 5:
+      return operationFirstParameters == operationSecondParameters;
   }
 }
 
