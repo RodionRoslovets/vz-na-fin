@@ -18,7 +18,7 @@ body,
 
 .common-grid {
   display: grid;
-  grid-template-areas: 'index accuracy objects text'
+  grid-template-areas: 'index accuracy text text'
     'total total total total';
   grid-template-columns: 202px 250px 300px 1fr;
   grid-template-rows: auto 1fr;
@@ -382,8 +382,8 @@ body,
 @media (max-width:1200px) {
   .common-grid {
     display: grid;
-    grid-template-areas: 'index objects text'
-      'accuracy objects text'
+    grid-template-areas: 'index index text'
+      'accuracy accuracy text'
       'total total total';
     grid-template-columns: 250px 300px 1fr;
   }
@@ -394,7 +394,7 @@ body,
     display: grid;
     grid-template-areas: 'text text text'
       'index accuracy accuracy'
-      'index objects objects'
+      'index accuracy accuracy'
       'total total total'
     ;
     grid-template-columns: repeat(3, 1fr);
