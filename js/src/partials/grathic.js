@@ -13,6 +13,15 @@ import {
 } from "./generate";
 import { isGradeExist, getGradeNumbers } from "./grade";
 
+const DOWNLOAD_SVG = `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg>`;
+
+const donloadHandler = (btn) => {
+  var link = document.createElement("a");
+  link.download = btn.dataset.name;
+  link.href = btn.previousElementSibling.toDataURL();
+  link.click();
+};
+
 function grathDraw() {
   let parametersKits = getParametersKits(),
     gradeNumbers = getGradeNumbers(),
@@ -52,8 +61,21 @@ function grathDraw() {
       return `${values[i]}`;
     });
     datasets = new Array(parametersNumber).fill().map(function (item, i) {
+      const parametersGrathWrapper = document.createElement("div");
+      parametersGrathWrapper.classList.add("parameters-grath-wrapper");
+      const parametersGrathBtn = document.createElement("button");
+      parametersGrathBtn.classList.add("parameters-grath-btn");
+      parametersGrathBtn.innerHTML = DOWNLOAD_SVG;
+      parametersGrathBtn.dataset.name = `Grath p${i + 1}`;
       const parametersGrath = document.createElement("canvas");
-      parametersGrathBlock.append(parametersGrath);
+      parametersGrathBtn.addEventListener("click", () => {
+        donloadHandler(parametersGrathBtn);
+      });
+      parametersGrathWrapper.append(parametersGrath);
+      parametersGrathWrapper.append(parametersGrathBtn);
+
+      parametersGrathBlock.append(parametersGrathWrapper);
+
       return new Chart(parametersGrath, {
         data: {
           labels: labels,
@@ -83,8 +105,21 @@ function grathDraw() {
       return `p${i + 1}`;
     });
 
+    const parametersGrathWrapper = document.createElement("div");
+    parametersGrathWrapper.classList.add("parameters-grath-wrapper");
+    const parametersGrathBtn = document.createElement("button");
+    parametersGrathBtn.classList.add("parameters-grath-btn");
+    parametersGrathBtn.innerHTML = DOWNLOAD_SVG;
+
+    parametersGrathBtn.dataset.name = `Соотношение максимальных и минимальных значений коофициентов в наборах`;
+    parametersGrathBtn.addEventListener("click", () => {
+      donloadHandler(parametersGrathBtn);
+    });
+
     let parametersGrath = document.createElement("canvas");
-    parametersGrathBlock.append(parametersGrath);
+    parametersGrathWrapper.append(parametersGrath);
+    parametersGrathWrapper.append(parametersGrathBtn);
+    parametersGrathBlock.append(parametersGrathWrapper);
 
     datasets = new Chart(parametersGrath, {
       type: "bar",
@@ -131,7 +166,19 @@ function grathDraw() {
       });
 
       for (let i = 0; gradeNumbers > i; i++) {
+        const gradesGrathWrapper = document.createElement("div");
+        gradesGrathWrapper.classList.add("parameters-grath-wrapper");
+        const gradesGrathBtn = document.createElement("button");
+        gradesGrathBtn.classList.add("parameters-grath-btn");
+        gradesCraftBtn.innerHTML = DOWNLOAD_SVG;
+        gradesCraftBtn.dataset.name = `Grath Q${i + 1}`;
+        gradesCraftBtn.addEventListener("click", () => {
+          donloadHandler(gradesCraftBtn);
+        });
         const gradesGrath = document.createElement("canvas");
+        gradesGrathWrapper.appendChild(gradesGrath);
+        gradesGrathWrapper.appendChild(gradesGrathBtn);
+
         gradesGrathBlock.append(gradesGrath);
         new Chart(gradesGrath, {
           data: {
@@ -169,8 +216,19 @@ function grathDraw() {
         return `Q${i + 1}`;
       });
 
+      const gradesGrathWrapper = document.createElement("div");
+      gradesGrathWrapper.classList.add("parameters-grath-wrapper");
+      const gradesGrathBtn = document.createElement("button");
+      gradesGrathBtn.classList.add("parameters-grath-btn");
+      gradesGrathBtn.innerHTML = DOWNLOAD_SVG;
+      gradesGrathBtn.dataset.name = `Соотношение максимальных и минимальных значений оценок в наборах`;
+      gradesGrathBtn.addEventListener("click", () => {
+        donloadHandler(gradesGrathBtn);
+      });
       const gradesGrath = document.createElement("canvas");
-      gradesGrathBlock.append(gradesGrath);
+      gradesGrathWrapper.appendChild(gradesGrath);
+      gradesGrathWrapper.appendChild(gradesGrathBtn);
+      gradesGrathBlock.appendChild(gradesGrathWrapper);
 
       new Chart(gradesGrath, {
         type: "bar",

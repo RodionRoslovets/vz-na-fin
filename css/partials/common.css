@@ -302,7 +302,24 @@ body,
   display: none;
 }
 
+.parameters-grath-wrapper {
+  position: relative;
+  padding-top: 10px;
+}
 
+.parameters-grath-wrapper canvas {
+  width: 100% !important;
+  height: auto !important;
+}
+
+.parameters-grath-btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  position: absolute;
+  top: 32px;
+  right: 10px;
+}
 
 
 @keyframes bar1 {
