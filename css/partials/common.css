@@ -39,6 +39,7 @@ body,
 
 .common-objects {
   grid-area: objects;
+  display: none !important;
 }
 
 .common-text {

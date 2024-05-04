@@ -590,13 +590,13 @@ const exportStat = async () => {
           keys.push(`P${index + 1}`);
         }
       });
-      objNames?.forEach((item, index) => {
-        if (item.value) {
-          keys.push(item.value);
-        } else {
-          keys.push(`O${index + 1}`);
-        }
-      });
+      // objNames?.forEach((item, index) => {
+      //   if (item.value) {
+      //     keys.push(item.value);
+      //   } else {
+      //     keys.push(`O${index + 1}`);
+      //   }
+      // });
 
       if (keys.length !== results[0].length) {
         keys = keys.slice(0, results[0].length);
