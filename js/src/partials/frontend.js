@@ -577,7 +577,7 @@ const exportStat = async () => {
   setTimeout(() => {
     try {
       const date = new Date();
-      const name = `DINAMO_EXPORT_${date.getDate()}-${
+      const name = `Weights_Export_${date.getDate()}-${
         date.getMonth() + 1
       }-${date.getFullYear()}__${date.getHours()}-${date.getMinutes()}`;
 
