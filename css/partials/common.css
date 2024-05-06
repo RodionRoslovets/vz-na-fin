@@ -16,6 +16,19 @@ body,
   display: none;
 }
 
+.main-wrapper {
+  padding-top: 30px;
+}
+
+.parameters-form {
+  margin-top: 40px;
+}
+
+.title {
+  max-width: 70%;
+  margin: 0;
+}
+
 .common-grid {
   display: grid;
   grid-template-areas: 'index accuracy text text'
@@ -31,10 +44,12 @@ body,
 
 .common-index {
   grid-area: index;
+  max-width: fit-content;
 }
 
 .common-accuracy {
   grid-area: accuracy;
+  max-width: fit-content;
 }
 
 .common-objects {
@@ -44,6 +59,10 @@ body,
 
 .common-text {
   grid-area: text;
+}
+
+.common-text p {
+  margin: 20px 0 0;
 }
 
 .common-accuracy-wrapper {
@@ -98,6 +117,8 @@ body,
 
 .common-limits {
   margin-top: 14px;
+  position: relative;
+  z-index: 1;
 }
 
 .common__input {
@@ -382,8 +403,7 @@ body,
 @media (max-width:1200px) {
   .common-grid {
     display: grid;
-    grid-template-areas: 'index index text'
-      'accuracy accuracy text'
+    grid-template-areas: 'index accuracy text'
       'total total total';
     grid-template-columns: 250px 300px 1fr;
   }
@@ -393,7 +413,6 @@ body,
   .common-grid {
     display: grid;
     grid-template-areas: 'text text text'
-      'index accuracy accuracy'
       'index accuracy accuracy'
       'total total total'
     ;
@@ -465,6 +484,10 @@ body,
 }
 
 @media (max-width:560px) {
+  .title {
+    max-width: none;
+  }
+
   .common-grid {
     display: grid;
     grid-template-areas: 'text' 'index' 'accuracy' 'objects' 'total';
