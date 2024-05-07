@@ -143,6 +143,9 @@ function grathDraw() {
             min: 0,
             max: parameterKitSumm,
             beginAtZero: true,
+            ticks: {
+              stepSize: 0.05,
+            },
           },
         },
       },
