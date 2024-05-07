@@ -46,9 +46,7 @@ function grathDraw() {
 
     // parameters kits grathic
     grathBlock.append(parametersGrathBlock);
-    parametersGrathBlock.append(
-      `Граффики значений наборов весовых коофициентов`
-    );
+    parametersGrathBlock.append(`Граффики весовых коофициентов`);
 
     valuesNumber = Math.round((parameterKitSumm / grathStep) * 100) / 100;
     values = new Array(valuesNumber).fill().map(function (item, i) {
@@ -82,7 +80,7 @@ function grathDraw() {
           datasets: [
             {
               type: "bar",
-              label: `Показатель p${i + 1}`,
+              label: `Показатель X${i + 1}`,
               data: new Array(values.length).fill().map(function (item, k) {
                 return parametersKits.reduce(function (currentSum, currentKit) {
                   return currentKit[i] == values[k] ? ++currentSum : currentSum;
@@ -111,7 +109,7 @@ function grathDraw() {
     parametersGrathBtn.classList.add("parameters-grath-btn");
     parametersGrathBtn.innerHTML = DOWNLOAD_SVG;
 
-    parametersGrathBtn.dataset.name = `Соотношение максимальных и минимальных значений коофициентов в наборах`;
+    parametersGrathBtn.dataset.name = `График изменения значений весовых коэффициентов для показателей в наборах`;
     parametersGrathBtn.addEventListener("click", () => {
       donloadHandler(parametersGrathBtn);
     });
@@ -124,11 +122,11 @@ function grathDraw() {
     datasets = new Chart(parametersGrath, {
       type: "bar",
       data: {
-        labels: labels,
+        labels: labels.map((_, ind) => `X${ind + 1}`),
         datasets: [
           {
             type: "bar",
-            label: `Соотношение максимальных и минимальных значений коофициентов в наборах`,
+            label: `График изменения значений весовых коэффициентов для показателей в наборах`,
             data: labels.map(function (item, k) {
               return [
                 Math.max(...parametersKits.map((innerArray) => innerArray[k])),
@@ -139,6 +137,7 @@ function grathDraw() {
         ],
       },
       options: {
+        barThickness: 40,
         scales: {
           y: {
             min: 0,
