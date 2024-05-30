@@ -174,10 +174,10 @@ function grathDraw() {
         gradesGrathWrapper.classList.add("parameters-grath-wrapper");
         const gradesGrathBtn = document.createElement("button");
         gradesGrathBtn.classList.add("parameters-grath-btn");
-        gradesCraftBtn.innerHTML = DOWNLOAD_SVG;
-        gradesCraftBtn.dataset.name = `Grath Q${i + 1}`;
-        gradesCraftBtn.addEventListener("click", () => {
-          donloadHandler(gradesCraftBtn);
+        gradesGrathBtn.innerHTML = DOWNLOAD_SVG;
+        gradesGrathBtn.dataset.name = `Grath Q${i + 1}`;
+        gradesGrathBtn.addEventListener("click", () => {
+          donloadHandler(gradesGrathBtn);
         });
         const gradesGrath = document.createElement("canvas");
         gradesGrathWrapper.appendChild(gradesGrath);
