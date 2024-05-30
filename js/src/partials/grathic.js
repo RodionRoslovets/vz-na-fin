@@ -127,7 +127,7 @@ function grathDraw() {
         datasets: [
           {
             type: "bar",
-            label: `График изменения значений весовых коэффициентов для показателей в наборах`,
+            label: `значений весовых коэффициентов для показателей в наборах`,
             data: labels.map(function (item, k) {
               return [
                 Math.max(...parametersKits.map((innerArray) => innerArray[k])),
@@ -262,11 +262,15 @@ function grathDraw() {
         },
         options: {
           backgroundColor: "rgb(209, 250, 255)",
+          barThickness: 40,
           scales: {
             y: {
               min: 0,
               max: parameterKitSumm,
               beginAtZero: true,
+              ticks: {
+                stepSize: 0.05,
+              },
             },
           },
         },
