@@ -183,7 +183,7 @@ function grathDraw() {
         gradesGrathWrapper.appendChild(gradesGrath);
         gradesGrathWrapper.appendChild(gradesGrathBtn);
 
-        gradesGrathBlock.append(gradesGrath);
+        gradesGrathBlock.append(gradesGrathWrapper);
         new Chart(gradesGrath, {
           data: {
             labels: labels,
