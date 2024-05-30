@@ -10,3 +10,11 @@
 @import "partials/result-grade-p-table.css";
 
 @import "partials/styleguide.css";
+
+/* fonts */
+body {
+    font-family: "Exo 2", sans-serif;
+    font-style: normal;
+    min-height: 100vh;
+    font-weight: 400;
+}

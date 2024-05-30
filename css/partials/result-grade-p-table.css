@@ -9,10 +9,7 @@
     text-align: end;
 }
 
-.result-grade-p-table tr {
-}
-
 .result-grade-p-table td {
     padding: 10px 15px;
-    background: whitesmoke;
+    background: var(--pink-btn);
 }

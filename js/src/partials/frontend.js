@@ -134,8 +134,30 @@ function resultTableDraw(gradeExist) {
           i == parametersNumber
             ? { style: `border-left: ${borderStyle};` }
             : {};
-        addTableItem(parametersRow, item, parameters);
+
+        addTableItem(parametersRow, isNaN(item) ? 0 : item, parameters);
       });
+
+      //add labels to objects
+      const objectsCells = Array.from(
+        parametersRow.querySelectorAll("td")
+      ).slice(parametersNumber + 1);
+
+      if (objectsCells.length > 0) {
+        const sortedVals = objectsCells
+          .map((cell) => parseFloat(cell.innerText))
+          .sort((a, b) => b - a);
+
+        objectsCells.map((cell) => {
+          sortedVals.forEach((val, valInd) => {
+            if (val === parseFloat(cell.innerText)) {
+              cell.innerHTML =
+                cell.innerText +
+                `<span class="cell-label">${valInd + 1}</span>`;
+            }
+          });
+        });
+      }
 
       tableBody.append(parametersRow);
     });
@@ -340,9 +362,9 @@ function addGradePDraw() {
     const table = document.createElement("table");
     const tableBlock = document.querySelector(".js_result-grade-p-table");
     tableBlock.innerHTML = "";
-    tableBlock.append(`
-		Таблица стахастического доминирования оценок —
-		Вероятность, что оценка набора строки больше оценки набора столбца`);
+    // tableBlock.append(`
+    // Таблица стохастического доминирования оценок —
+    // Вероятность, что оценка набора строки больше оценки набора столбца`);
     tableBlock.append(table);
     document
       .querySelector('[data-menu-name="grade-p"]')

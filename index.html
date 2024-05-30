@@ -4,10 +4,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="./css/styles.css">
+
+    <!-- exo 2 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&family=Tektur:wght@400..900&display=swap" rel="stylesheet">
+
 </head>
 <body>
     <div class="max-width main-wrapper">
-        <h1 class="title">Расчет весовых коэффициентов в&nbsp;моделях линейной свертки, отражающей значимость показателей</h1>
+        <h1 class="title">Построение рейтинговой системы на&nbsp;основе совокупности показателей с&nbsp;заданной для них системой нечисловых и&nbsp;нечетких ограничений</h1>
         <form class="parameters-form js_parameters-form">
             <div class="common-grid">
                 <div class="common-index">
@@ -108,7 +114,18 @@
                 
                 <div class="common-objects">
                     <div class="parametrs-grade-input js_parametrs-grade-input">
-                        <div class=".parametrs-grade-input-title" title="Введите значения единичных показателей Xi для обектов">Введите значения единичных показателей x<sub>i</sub> для обектов</div>
+                        <div class=".parametrs-grade-input-title">
+                            <div class="tooltip-outer">
+                                <label for="number">Объекты</label>
+                                <div class="tooltip-wrapper">
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="10" cy="10" r="10" fill="#D9D9D9"/>
+                                        <path d="M8.97727 12.7273V12.6591C8.98485 11.9356 9.06061 11.3598 9.20455 10.9318C9.34848 10.5038 9.55303 10.1572 9.81818 9.89205C10.0833 9.62689 10.4015 9.38258 10.7727 9.15909C10.9962 9.02273 11.197 8.86174 11.375 8.67614C11.553 8.48674 11.6932 8.26894 11.7955 8.02273C11.9015 7.77652 11.9545 7.50379 11.9545 7.20455C11.9545 6.83333 11.8674 6.51136 11.6932 6.23864C11.5189 5.96591 11.286 5.75568 10.9943 5.60795C10.7027 5.46023 10.3788 5.38636 10.0227 5.38636C9.71212 5.38636 9.41288 5.45076 9.125 5.57955C8.83712 5.70833 8.59659 5.91098 8.40341 6.1875C8.21023 6.46401 8.09848 6.82576 8.06818 7.27273H6.63636C6.66667 6.62879 6.83333 6.07765 7.13636 5.61932C7.44318 5.16098 7.84659 4.81061 8.34659 4.56818C8.85038 4.32576 9.40909 4.20455 10.0227 4.20455C10.6894 4.20455 11.2689 4.33712 11.7614 4.60227C12.2576 4.86742 12.6402 5.23106 12.9091 5.69318C13.1818 6.1553 13.3182 6.68182 13.3182 7.27273C13.3182 7.68939 13.2538 8.06629 13.125 8.40341C13 8.74053 12.8182 9.04167 12.5795 9.30682C12.3447 9.57197 12.0606 9.80682 11.7273 10.0114C11.3939 10.2197 11.1269 10.4394 10.9261 10.6705C10.7254 10.8977 10.5795 11.1686 10.4886 11.483C10.3977 11.7973 10.3485 12.1894 10.3409 12.6591V12.7273H8.97727ZM9.70455 16.0909C9.42424 16.0909 9.18371 15.9905 8.98295 15.7898C8.7822 15.589 8.68182 15.3485 8.68182 15.0682C8.68182 14.7879 8.7822 14.5473 8.98295 14.3466C9.18371 14.1458 9.42424 14.0455 9.70455 14.0455C9.98485 14.0455 10.2254 14.1458 10.4261 14.3466C10.6269 14.5473 10.7273 14.7879 10.7273 15.0682C10.7273 15.2538 10.6799 15.4242 10.5852 15.5795C10.4943 15.7348 10.3712 15.8598 10.2159 15.9545C10.0644 16.0455 9.89394 16.0909 9.70455 16.0909Z" fill="white"/>
+                                    </svg>
+                                    <div class="tooltip">Введите значения единичных показателей x<sub>i</sub> для объектов</div>
+                                    </div>
+                                </div>
+                             </div>
                         <div class="parameters-grade-table-block js-parameters-grade-table-block"></div>
                         <div class="parametrs-grade-input__number-control js_parametrs-grade-input-number-control">
                             <button type="button" class="js_parametrs-grade-input-number-control-remove common__button-button objects-remove">
@@ -126,7 +143,7 @@
                         </div>
                     </div>
                     <div class="objects-names">
-                        <p>Имена обьектов</p>
+                        <p>Имена объектов</p>
                         <div class="objects-names-list">
 
                         </div>
@@ -143,12 +160,7 @@
                     </button>
                     <div class="common-text-content">
                         <p>
-                            Данная программа предназначена для автоматизированного 
-                            расчета всех допустимых наборов весовых коэффициентов с&nbsp;учетом 
-                            значимости единичных показателей в&nbsp;линейной свертке. С&nbsp;учетом указанной 
-                            точности и&nbsp;приоритетов, Вы&nbsp;получите таблицу допустимых наборов весовых 
-                            коэффициентов, а&nbsp;также графики их&nbsp;распределения с&nbsp;возможностью экспорта 
-                            результатов.
+                            Программа позволяет осуществлять расчет рейтинговых оценок для заданной совокупности объектов путем автоматизированного перебора всех допустимых наборов весовых коэффициентов в&nbsp;линейной свертке, удовлетворяющих заданным входным ограничениям, которые отражают задаваемые пользователем изначальные сведения о&nbsp;сравнительной значимости показателей. Программа выводит полную таблицу допустимых наборов весовых коэффициентов и&nbsp;им&nbsp;соответствующих рейтинговых оценок для каждого из&nbsp;объектов и&nbsp;графики их&nbsp;распределений с&nbsp;возможностью экспорта результатов. Программа также вычисляет и&nbsp;выводит таблицу вероятностей стохастического доминирования одних объектов над другими.
                         </p>
                     </div>
                 </div>
@@ -171,7 +183,7 @@
             <div class="result-menu js_result-menu">
                 <button class="result-menu__button js_result-menu-button active" data-menu-name="grath">Графики</button>
                 <button class="result-menu__button js_result-menu-button " data-menu-name="table">Таблица</button>
-                <button class="result-menu__button js_result-menu-button" data-menu-name="grade-p">Таблица стахастического доминирования оценок</button>
+                <button class="result-menu__button js_result-menu-button" data-menu-name="grade-p">Таблица стохастического доминирования оценок</button>
                 <button type="button" class="result-menu__button js_result-download" data-menu-name="download">
                     <span>Экспорт таблицы</span>
                     <div class="loader">
@@ -190,39 +202,6 @@
             <div class="result-grade-p-table js_result-grade-p-table" data-menu-name="grade-p">
             </div>
             <div class="result-graths js_result-graths active" data-menu-name="grath">
-    <!-- <form class="parameters-form js_parameters-form">
-        <div class="parameters-form__parameters-generate-block">
-            <label for="number">Введите количество показателей m:</label>
-            <input type="number" id="number" name="number" class="js_parametrs-number-input" min="3" placeholder="Введите количество показателей m">
-            <label for="step">Введите точность вычисления весовых коэффициентов p<sub>i</sub>:</label>
-            <input type="number" id="step" name="step" class="js_parametrs-step-input" min="0" step="0.0005" placeholder="Введите точность вычисления весовых коэффициентов, кратную 0.0005">
-            <br><div>Общее количество наборов: <span class="js_parametrs-kits-number">-</span></div>
-            <br><div>Число допустимых наборов: <span class="js_parametrs-kits-end-number">-</span></div>
-        </div>
-        <div class="parameters-form__parameters-filter-block">
-            <label for="filter">Введите ограничения (по упорядочеванию показателей):</label>
-            <input type="text" id="filter" name="filter" class="js_parametrs-filter-input" placeholder="Введите ограничения (по упорядочеванию показателей)">
-            <div class="parametrs-grade-input js_parametrs-grade-input">
-                <div class=".parametrs-grade-input-title" title="Введите значения единичных показателей Xi для обектов">Введите значения единичных показателей X<sub>i</sub> для обектов</div>
-                <div class="parameters-grade-table-block js-parameters-grade-table-block"></div>
-                <div class="parametrs-grade-input__number-control js_parametrs-grade-input-number-control">
-                    <div class="js_parametrs-grade-input-number-control-remove">-</div>
-                    <div class="js_parametrs-grade-input-number-control-add">+</div>
-                </div>
-            </div>
-        </div>
-        <input type="submit" class="js_parametrs-form-submit" value="Рассчитать">
-    </form>
-    <div class="result-block js_result-block">
-        <div class="result-menu js_result-menu">
-            <button class="result-menu__button js_result-menu-button active" data-menu-name="table">Таблица результатов</button>
-            <button class="result-menu__button js_result-menu-button" data-menu-name="grade-p">Таблица стохастического доминирования оценок</button>
-            <button class="result-menu__button js_result-menu-button" data-menu-name="grath">Графики</button>
-            <a class="result-menu__button js_result-download" data-menu-name="download">Экспорт результатов</a>
-        </div>
-        <div class="result-table active" data-menu-name="table">
-            <div class="parameters-table js_parameters-table"></div>
-            <div class="result-table__pagination js_result-table-pagination"> -->
             </div>
         </div>
         <div class="errno-field js_errno-field max-width"></div>

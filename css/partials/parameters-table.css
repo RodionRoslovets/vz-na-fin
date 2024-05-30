@@ -9,15 +9,14 @@
     border-collapse: collapse;
 }
 
-.parameters-table tr {}
-
-.parameters-table tbody tr {
-    border-bottom: 1px solid #fff;
+.parameters-table tbody tr:last-child {
+    border-bottom: 1px solid black;
 }
 
 .parameters-table td {
     padding: 10px 15px;
     text-align: center;
+    position: relative;
 }
 
 .parameters-table td:nth-child(2n) {
@@ -25,11 +24,11 @@
 }
 
 .parameters-table tbody tr:nth-child(even) td {
-    background: var(--gray-d9);
+    background: var(--pink-btn);
 }
 
 .parameters-table tbody tr:nth-child(odd) td {
-    background: var(--gray-ec);
+    background: var(--green-c4);
 }
 
 .parameters-table thead td {
@@ -42,9 +41,20 @@
     background: none;
 }
 
-/* .parameters-table thead tr:nth-child(1) td:nth-child(1) {
-    background: var(--gray-e6);
-} */
 .parameters-table thead tr td {
-    background: var(--pink-ff) !important;
+    background: var(--pink-btn-hover) !important;
+}
+
+.cell-label {
+    font-size: 10px;
+    background: var(--cell-label);
+    border-radius: 50%;
+    position: absolute;
+    top: 4px;
+    right: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 15px;
+    height: 15px;
 }

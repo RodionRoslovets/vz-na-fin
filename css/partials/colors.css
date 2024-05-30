@@ -5,5 +5,8 @@
     --gray-d9-t8: rgb(217, 217, 217, 0.8);
     --gray-e6: #e6e6e6;
     --gray-ec: #eceaea;
-    --pink-ff: #ffadad;
+    --pink-btn: #d1faff;
+    --pink-btn-hover: #bbf6fe;
+    --cell-label: #a5f4ff;
+    --grad-1: linear-gradient(90deg, rgba(240, 219, 255, 0.802) 0%, rgba(255, 199, 244, 0.796) 51%, rgba(255, 201, 234, 0.849) 100%);
 }
